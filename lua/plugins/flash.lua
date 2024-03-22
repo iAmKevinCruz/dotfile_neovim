@@ -8,7 +8,7 @@ return {
       modes = {
         char = {
           jump_labels = true,
-          label = { exclude = "hjkliardcvpy" }
+          label = { exclude = "hjkliIaArdcCvpPyg" }
         },
         search = {
           enabled = false
