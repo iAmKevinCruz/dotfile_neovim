@@ -117,18 +117,18 @@ return {
       require('telescope').load_extension('smart_history')
 
       -- See `:help telescope.builtin`
-      vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
-      vim.keymap.set('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[F]ind [W]ord (grep)' })
-      vim.keymap.set('n', '<leader>fW', function()
-        local word = vim.fn.expand("<cWORD>")
-        require('telescope.builtin').grep_string({ search = word })
-      end, {desc = '[F]ind [W]ord under cursor'})
+      -- vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+      -- vim.keymap.set('n', '<leader>fw', require('telescope.builtin').live_grep, { desc = '[F]ind [W]ord (grep)' })
+      -- vim.keymap.set('n', '<leader>fW', function()
+      --   local word = vim.fn.expand("<cword>")
+      --   require('telescope.builtin').grep_string({ search = word })
+      -- end, {desc = '[F]ind [W]ord under cursor'})
       vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[F]ind [O]ld files' })
-      vim.keymap.set('n', '<leader>b', ":lua require('telescope.builtin').buffers({sort_mru=true,ignore_current_buffer=true})<CR>", { desc = 'Find existing [B]uffers (sorted)' })
+      -- vim.keymap.set('n', '<leader>b', ":lua require('telescope.builtin').buffers({sort_mru=true,ignore_current_buffer=true})<CR>", { desc = 'Find existing [B]uffers (sorted)' })
       vim.keymap.set('n', '<leader>gt', require('telescope.builtin').git_status, { desc = 'Search [G]it s[T]atus' })
-      vim.keymap.set('n', '<leader>fr', require('telescope.builtin').resume, { desc = '[F]ind [R]esume' })
+      -- vim.keymap.set('n', '<leader>fr', require('telescope.builtin').resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>fR', require('telescope.actions.history').get_simple_history, { desc = '[F]ind [R]ecent History' })
-      vim.keymap.set('n', '<leader>fz', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[F]u[Z]zy Find Current Buffer' })
+      -- vim.keymap.set('n', '<leader>fz', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[F]u[Z]zy Find Current Buffer' })
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -136,8 +136,8 @@ return {
           previewer = false,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
-      vim.keymap.set('n', '<leader>fqq', '<cmd>Telescope quickfix<cr>', { desc = 'Open Telescope Quickfix' })
-      vim.keymap.set('n', '<leader>fq', '<cmd>Telescope quickfixhistory<cr>', { desc = 'Open Telescope Quickfix History' })
+      -- vim.keymap.set('n', '<leader>fqq', '<cmd>Telescope quickfix<cr>', { desc = 'Open Telescope Quickfix' })
+      -- vim.keymap.set('n', '<leader>fq', '<cmd>Telescope quickfixhistory<cr>', { desc = 'Open Telescope Quickfix History' })
 
       -- vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
       -- vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
