@@ -1,5 +1,5 @@
 return {
-  {
+  --[[ {
     'nvim-orgmode/orgmode',
     event="VeryLazy",
     config = function()
@@ -133,5 +133,5 @@ return {
         require('orgmode-multi-key').setup()
       end
     }
-  },
+  }, ]]
 }

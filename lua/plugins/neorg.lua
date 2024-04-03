@@ -1,5 +1,5 @@
 return {
-  {
+  --[[ {
     "nvim-neorg/neorg",
     cmd = "Neorg",
     build = ":Neorg sync-parsers",
@@ -84,5 +84,5 @@ return {
       },
     },
     dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" }  },
-  }
+  } ]]
 }

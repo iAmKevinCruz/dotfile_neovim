@@ -1,25 +1,8 @@
 -- Keymaps
--- vim.keymap.set('n', '<leader>zn', ':TZNarrow<CR>', { desc = 'True[Z]en [N]arrow Mode', silent = true })
--- vim.keymap.set('n', '<leader>zf', ':TZFocus<CR>', { desc = 'True[Z]en [F]ocus Mode', silent = true })
--- vim.keymap.set('n', '<leader>zm', ':TZMinimalist<CR>', { desc = 'True[Z]en [M]inimalist Mode', silent = true })
--- vim.keymap.set('n', '<leader>za', ':TZAtaraxis<CR>', { desc = 'True[Z]en [A]traxis Mode', silent = true })
--- vim.keymap.set('v', '<leader>zn', ":'<,'>tznarrow<cr>", { desc = 'True[Z]en [N]arrow Mode (selection)', silent = true })
-
 vim.keymap.set('n', '<leader>zz', '<CMD>ZenMode<CR>', { desc = '[Z]en [M]ode', silent = true })
 vim.keymap.set('n', '<leader>zt', '<CMD>Twilight<CR>', { desc = '[T]wilight toggle', silent = true })
 
 return {
-  -- {
-  --   "Pocco81/true-zen.nvim",
-  --   lazy = false,
-  --   config = function()
-  --     require("true-zen").setup {
-  --       -- your config goes here
-  --       -- or just leave it empty :)
-  --     }
-  --   end,
-  -- },
-
   {
     "folke/zen-mode.nvim",
     dependencies = {
