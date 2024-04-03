@@ -6,6 +6,9 @@ vim.keymap.set('n', '<leader>fe', ':lua require("mini.files").open(vim.loop.cwd(
 -- mini.session
 vim.keymap.set('n', '<leader>msr', ':lua MiniSessions.read()<CR>', { desc = '[M]ini[S]ession [R]ead session', silent = true })
 
+-- mini.diff
+vim.keymap.set('n', '<leader>md', ':lua MiniDiff.toggle_overlay()<CR>', { desc = '[M]ini[D]iff toggle overlay', silent = true })
+
 -- mini.pick
 vim.keymap.set('n', '<leader>mff', '<CMD>Pick files<CR>', { desc = '[M]iniPick [F]ind [F]iles', silent = true })
 vim.keymap.set('n', '<leader>mfb', '<CMD>Pick buffers<CR>', { desc = '[M]iniPick [F]ind [B]uffers', silent = true })
@@ -24,6 +27,24 @@ return {
     'echasnovski/mini.nvim',
     lazy = false,
     config = function()
+      require('mini.diff').setup({
+        mappings = {
+          -- Apply hunks inside a visual/operator region
+          apply = 'gh',
+
+          -- Reset hunks inside a visual/operator region
+          reset = 'gH',
+
+          -- Hunk range textobject to be used inside operator
+          textobject = 'gh',
+
+          -- Go to hunk range in corresponding direction
+          goto_first = 'hh',
+          goto_prev = 'h<',
+          goto_next = 'h>',
+          goto_last = 'H',
+        },
+      })
       require('mini.extra').setup()
       require('mini.cursorword').setup()
       require('mini.splitjoin').setup()
@@ -115,6 +136,7 @@ return {
           end)
 
           MiniFiles.set_target_window(new_target_window)
+          MiniFiles.go_in({close_on_file = true})
         end
 
         -- Adding `desc` will result into `show_help` entries

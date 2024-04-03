@@ -11,6 +11,10 @@ vim.keymap.set('n', '<leader>gfc', ':LazyGitFilterCurrentFile <CR>', { desc = 'O
 vim.keymap.set('n', '<leader>gw', ':lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', { desc = 'Open [G]it-[W]orktrees via Telescope', silent = true })
 vim.keymap.set('n', '<leader>gW', ':lua require("telescope").extensions.git_worktree.create_git_worktree()<CR>', { desc = 'Create new Git Worktree via Telescope', silent = true })
 
+-- Git fugitive
+vim.keymap.set('n', '<leader>gc', '<CMD>Git commit<CR>', { desc = '[G]it [C]ommit via Fugitive', silent = true })
+vim.keymap.set('n', '<leader>gp', '<CMD>Git push<CR>', { desc = '[G]it [P]ush via Fugitive', silent = true })
+
 return {
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
