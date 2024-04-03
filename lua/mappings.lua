@@ -69,6 +69,7 @@ vim.keymap.set('n', '<M-b>', function()
   end
 end, { desc = 'Toggle Transparency', silent = true })
 
+-- Formatting and linting 
 vim.keymap.set('n', '={', '=a{', { desc = 'Format space AROUND curly braces', silent = true })
 vim.keymap.set('n', '=}', '=i{', { desc = 'Format space INSIDE curly braces', silent = true })
 vim.keymap.set('n', '=(', '=a(', { desc = 'Format space AROUND parentheses', silent = true })
@@ -77,6 +78,7 @@ vim.keymap.set('n', '=[', '=a[', { desc = 'Format space AROUND brackets', silent
 vim.keymap.set('n', '=]', '=i]', { desc = 'Format space INSIDE brackets', silent = true })
 vim.keymap.set('n', '<leader>x', ':bd<CR>', { desc = 'Buffer delete', silent = true })
 vim.keymap.set('n', '<Esc>', ':noh <CR>', { desc = 'Clear highlights', silent = true })
+vim.keymap.set('n', '<leader>ll', '<CMD>EslintFixAll<CR>', { desc = 'Es[l]int fix all', silent = true })
 
 -- switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Window left', silent = true })
@@ -85,8 +87,8 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Window down', silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Window up', silent = true })
 
 -- save
-vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', { desc = 'Save file', silent = true })
-
+vim.keymap.set('n', '<C-s>', '<cmd>silent! update | redraw<CR>', { desc = 'Save', silent = true })
+vim.keymap.set({'i','x'}, '<C-s>', '<Esc><cmd>silent! update | redraw<CR>', { desc = 'Save and go to normal mode', silent = true })
 
 -- Visual  Mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move line down', silent = true })
