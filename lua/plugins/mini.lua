@@ -45,6 +45,8 @@ return {
           goto_last = 'H',
         },
       })
+      -- require('mini.notify').setup()
+      -- require('mini.statusline').setup()
       require('mini.extra').setup()
       require('mini.cursorword').setup()
       require('mini.splitjoin').setup()
