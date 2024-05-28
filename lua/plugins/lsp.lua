@@ -116,6 +116,7 @@ return {
           header = "",
           prefix = "",
         },
+        virtual_text = false,
       })
 
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -123,6 +124,10 @@ return {
           vim.keymap.set('n', '<leader>ra', vim.lsp.buf.rename, { buffer = args.buf })
           vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { buffer = args.buf })
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = args.buf })
+          -- this is a key map to taggle virtual_text. Needs to read if it is currently true or false
+          -- vim.keymap.set('n', 'ltd', function ()
+          --
+          -- end, { buffer = args.buf })
         end,
       })
     end
