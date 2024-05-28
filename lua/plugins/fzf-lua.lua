@@ -8,6 +8,8 @@ vim.keymap.set('n', '<leader>fz', "<cmd>FzfLua grep_curbuf<cr>", { desc = '[F]u[
 vim.keymap.set('n', '<leader>fq', "<cmd>FzfLua quickfix<cr>", { desc = '[F]ind [Q]uickfix items' })
 vim.keymap.set('n', '<leader>fQ', "<cmd>FzfLua quickfix_stack<cr>", { desc = '[F]ind [Q]uickfix history stack' })
 vim.keymap.set('n', '<leader>fj', "<cmd>FzfLua jumps<cr>", { desc = '[F]ind [J]umps' })
+vim.keymap.set('n', '<leader>fm', "<cmd>FzfLua marks<cr>", { desc = '[F]ind [M]arks' })
+vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua changes<cr>", { desc = '[F]ind [M]arks' })
 
 return {
   {
@@ -113,6 +115,7 @@ return {
             ["ctrl-a"]      = "beginning-of-line",
             ["ctrl-e"]      = "end-of-line",
             ["alt-a"]       = "toggle-all",
+            ["shift-right"] = "toggle",
             -- Only valid with fzf previewers (bat/cat/git/etc)
             ["f3"]          = "toggle-preview-wrap",
             ["f4"]          = "toggle-preview",
