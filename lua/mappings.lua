@@ -76,7 +76,7 @@ vim.keymap.set('n', '=(', '=a(', { desc = 'Format space AROUND parentheses', sil
 vim.keymap.set('n', '=)', '=i(', { desc = 'Format space INSIDE parentheses', silent = true })
 vim.keymap.set('n', '=[', '=a[', { desc = 'Format space AROUND brackets', silent = true })
 vim.keymap.set('n', '=]', '=i]', { desc = 'Format space INSIDE brackets', silent = true })
-vim.keymap.set('n', '<leader>x', ':bd<CR>', { desc = 'Buffer delete', silent = true })
+vim.keymap.set('n', '<leader>Q', ':bd<CR>', { desc = 'Buffer delete', silent = true })
 vim.keymap.set('n', '<Esc>', ':noh <CR>', { desc = 'Clear highlights', silent = true })
 vim.keymap.set('n', '<leader>ll', '<CMD>EslintFixAll<CR>', { desc = 'Es[l]int fix all', silent = true })
 
