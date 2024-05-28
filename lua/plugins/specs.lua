@@ -1,7 +1,7 @@
 -- Keymaps
 
 return {
-  {
+  --[[ {
     'edluffy/specs.nvim',
     event = "BufEnter",
     config = function()
@@ -23,5 +23,5 @@ return {
         },
       }
     end
-  },
+  }, ]]
 }
