@@ -1,7 +1,7 @@
 -- Keymaps
-vim.keymap.set('n', '<leader>ha', ':Telescope harpoon marks<cr>', { desc = 'Telescope harpoon files', silent = true })
-vim.keymap.set('n', 'ha', ':lua require("harpoon.ui").toggle_quick_menu()<cr>', { desc = 'Open harpoon file menu', silent = true })
-vim.keymap.set('n', 'hA', ':lua require("harpoon.mark").add_file()<cr>', { desc = 'Add file to harpoon', silent = true })
+vim.keymap.set('n', '<leader>Ha', ':Telescope harpoon marks<cr>', { desc = 'Telescope harpoon files', silent = true })
+vim.keymap.set('n', 'Ha', ':lua require("harpoon.ui").toggle_quick_menu()<cr>', { desc = 'Open harpoon file menu', silent = true })
+vim.keymap.set('n', 'HA', ':lua require("harpoon.mark").add_file()<cr>', { desc = 'Add file to harpoon', silent = true })
 vim.keymap.set('n', 'g>', ':lua require("harpoon.ui").nav_next()<cr>', { desc = 'Next harpoon file', silent = true })
 vim.keymap.set('n', 'g<', ':lua require("harpoon.ui").nav_prev()<cr>', { desc = 'Prev harpoon file', silent = true })
 for i=0,9 do

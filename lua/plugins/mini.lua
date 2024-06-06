@@ -28,6 +28,10 @@ return {
     lazy = false,
     config = function()
       require('mini.diff').setup({
+        view = {
+          style = 'number',
+          priority = 199,
+        },
         mappings = {
           -- Apply hunks inside a visual/operator region
           apply = 'gh',
@@ -39,12 +43,16 @@ return {
           textobject = 'gh',
 
           -- Go to hunk range in corresponding direction
-          goto_first = 'hh',
-          goto_prev = 'h<',
-          goto_next = 'h>',
+          goto_first = 'HH',
+          goto_prev = '<h',
+          goto_next = '>h',
           goto_last = 'H',
         },
       })
+      vim.api.nvim_set_hl(0, "MiniDiffSignDelete", { fg = "#f38ba8" })
+      vim.api.nvim_set_hl(0, "MiniDiffSignChange", { fg = "#f9e2af" })
+      vim.api.nvim_set_hl(0, "MiniDiffSignAdd", { fg = "#a6e3a1" })
+
       -- require('mini.notify').setup()
       -- require('mini.statusline').setup()
       require('mini.extra').setup()

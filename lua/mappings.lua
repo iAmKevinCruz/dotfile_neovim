@@ -1,3 +1,4 @@
+local utils = require('utils.utils')
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -120,3 +121,33 @@ vim.keymap.set('n', '<leader>zc', function()
   vim.opt.list = not vim.opt.list:get()
 end, {desc = "Toggle listchars"})
 
+-- Zellij 
+vim.keymap.set('n', '<leader>pw', function()
+  local Job = require("plenary.job")
+
+  local current_file = vim.fn.resolve(vim.fn.expand("%"))
+  local project_root_directory = utils.get_git_root_directory(current_file)
+  local file_directory = vim.fn.fnamemodify(current_file, ":p:h")
+  local branch_name = utils.branch_name(nil, file_directory)
+
+  Job:new({
+    command = "zellij",
+    args = {
+      "run",
+      "-f",
+      "--",
+      "zsh",
+    },
+    cwd = project_root_directory,
+    on_exit = function()
+      Job:new({
+        command = "zellij",
+        args = {
+          "action",
+          "rename-pane",
+          branch_name,
+        },
+      }):start()
+    end,
+  }):start()
+end, {desc = "Open Zellij floating pane at cwd of the git root directory"})
