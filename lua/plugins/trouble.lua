@@ -2,7 +2,6 @@ return {
   {
     "folke/trouble.nvim",
     event = "VeryLazy",
-    branch = "dev", -- IMPORTANT!
     keys = {
       {
         "<leader>xx",
@@ -18,6 +17,11 @@ return {
         "<leader>cs",
         "<cmd>Trouble symbols toggle focus=false<cr>",
         desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>o",
+        "<cmd>Trouble lsp_document_symbols toggle focus=false win.position=right<cr>",
+        desc = "LSP Document Symbols (Trouble)",
       },
       {
         "<leader>cl",

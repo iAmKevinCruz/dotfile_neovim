@@ -1,9 +1,21 @@
 -- Keymaps
-vim.keymap.set('n', '<leader>e', '<CMD>NvimTreeFocus<CR>', { desc = 'NvimTree Focus', silent = true })
-vim.keymap.set('n', '<leader>E', '<CMD>NvimTreeToggle<CR>', { desc = 'NvimTree Toggle', silent = true })
+vim.keymap.set('n', '<leader>e', '<CMD>Neotree toggle<CR>', { desc = 'Neotree Toggle', silent = true })
+vim.keymap.set('n', '<leader>nb', '<CMD>Neotree toggle buffers<CR>', { desc = 'Neotree toggle buffers', silent = true })
+-- vim.keymap.set('n', '<leader>E', '<CMD>Neotree show<CR>', { desc = 'Neotree Show', silent = true })
 
 return {
   {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
+  },
+
+  --[[ {
     "nvim-tree/nvim-tree.lua",
     event = "VeryLazy",
     opts = {
@@ -90,5 +102,5 @@ return {
       vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = palette.base })
       vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = palette.base })
     end
-  },
+  }, ]]
 }

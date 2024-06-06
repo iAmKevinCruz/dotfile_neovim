@@ -7,7 +7,7 @@ return {
   --     vim.keymap.set('n', '<leader>so', '<Cmd>SymbolsOutline<CR>', { desc = 'Toggle [S]ymbols [O]utline' })
   --   end
   -- },
-  {
+  --[[ {
     "hedyhli/outline.nvim",
     lazy = true,
     cmd = { "Outline", "OutlineOpen" },
@@ -53,5 +53,5 @@ return {
         up_and_jump = '<C-k>',
       },
     },
-  },
+  }, ]]
 }
