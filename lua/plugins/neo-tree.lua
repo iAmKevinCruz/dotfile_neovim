@@ -1,7 +1,7 @@
 -- Keymaps
 vim.keymap.set('n', '<leader>e', '<CMD>Neotree toggle<CR>', { desc = 'Neotree Toggle', silent = true })
+vim.keymap.set('n', '<leader>E', '<CMD>Neotree reveal<CR>', { desc = 'Neotree Reveal current file', silent = true })
 vim.keymap.set('n', '<leader>nb', '<CMD>Neotree toggle buffers<CR>', { desc = 'Neotree toggle buffers', silent = true })
--- vim.keymap.set('n', '<leader>E', '<CMD>Neotree show<CR>', { desc = 'Neotree Show', silent = true })
 
 return {
   {

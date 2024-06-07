@@ -32,7 +32,6 @@ return {
         top = { size = 10 },
       },
       right = {
-        -- "Trouble",
         {
           ft = "trouble",
           size = { height = 0.4 },
