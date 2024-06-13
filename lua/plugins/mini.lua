@@ -8,6 +8,12 @@ vim.keymap.set('n', '<leader>msr', ':lua MiniSessions.read()<CR>', { desc = '[M]
 
 -- mini.diff
 vim.keymap.set('n', '<leader>md', ':lua MiniDiff.toggle_overlay()<CR>', { desc = '[M]ini[D]iff toggle overlay', silent = true })
+vim.keymap.set('n', '>h', function()
+  require('mini.diff').goto_hunk("next")
+end, { desc = 'MiniDiff Next Hunk', silent = true })
+vim.keymap.set('n', '<h', function()
+  require('mini.diff').goto_hunk("prev")
+end, { desc = 'MiniDiff Next Hunk', silent = true })
 
 -- mini.pick
 vim.keymap.set('n', '<leader>mff', '<CMD>Pick files<CR>', { desc = '[M]iniPick [F]ind [F]iles', silent = true })
@@ -44,17 +50,38 @@ return {
 
           -- Go to hunk range in corresponding direction
           goto_first = 'HH',
-          goto_prev = '<h',
-          goto_next = '>h',
+          goto_prev = '', -- commented these as they were assigned in visual too. eww 
+          goto_next = '',
           goto_last = 'H',
         },
+        -- Various options
+        options = {
+          -- Diff algorithm. See `:h vim.diff()`.
+          algorithm = 'histogram',
+
+          -- Whether to use "indent heuristic". See `:h vim.diff()`.
+          indent_heuristic = true,
+
+          -- The amount of second-stage diff to align lines (in Neovim>=0.9)
+          linematch = 60,
+
+          -- Whether to wrap around edges during hunk navigation
+          wrap_goto = true,
+        },
       })
+
       vim.api.nvim_set_hl(0, "MiniDiffSignDelete", { fg = "#f38ba8" })
       vim.api.nvim_set_hl(0, "MiniDiffSignChange", { fg = "#f9e2af" })
       vim.api.nvim_set_hl(0, "MiniDiffSignAdd", { fg = "#a6e3a1" })
 
       -- require('mini.notify').setup()
       -- require('mini.statusline').setup()
+      require('mini.surround').setup({
+        search_method = 'cover',
+      })
+      require('mini.git').setup()
+      require('mini.ai').setup()
+      require('mini.align').setup()
       require('mini.extra').setup()
       require('mini.cursorword').setup()
       require('mini.splitjoin').setup()
@@ -80,33 +107,57 @@ return {
           [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
           ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
 
-          ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
-          ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
-          ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
+          ['"'] = {
+            action = 'closeopen',
+            pair = '""',
+            neigh_pattern = '[^%"\\].',
+            register = { cr = false }
+          },
+          ["'"] = {
+            action = 'closeopen',
+            pair = "''",
+            neigh_pattern = "[^%'\\].",
+            register = { cr = false }
+          },
+          ['`'] = {
+            action = 'closeopen',
+            pair = '``',
+            neigh_pattern = '[^\\].',
+            register = { cr = false }
+          },
           ['%'] = {
             action = 'closeopen',
             pair = '%%',
-            neigh_pattern = '{.$',
+            neigh_pattern = '[{][}]', -- adds % only when surrounded by {}
             register = { cr = false }
           },
           ['-'] = {
             action = 'closeopen',
             pair = '--',
-            neigh_pattern = '%%.',
+            neigh_pattern = '%%%%',
             register = { cr = false }
+          },
+          ['/'] = {
+            action = 'closeopen',
+            pair = '//',
+            neigh_pattern = '[{][}]' -- adds double space if surrounded by %% or --
+          },
+          ['*'] = {
+            action = 'closeopen',
+            pair = '**',
+            neigh_pattern = '[/][/]' -- adds double space if surrounded by %% or --
           },
           [' '] = {
             action = 'open',
             pair = '  ',
-            neigh_pattern = '[{%-%%].'
+            neigh_pattern = '[%%-*][%%-*]' -- adds double space if surrounded by %% or --
           },
         },
       })
-      -- require('mini.surround').setup()
       require('mini.files').setup({
         windows = {
           preview = true,
-          width_preview = 50
+          width_preview = 80
         },
         options = {
           use_as_default_explorer = false,
@@ -166,7 +217,7 @@ return {
     end
   },
 
-  {
+  --[[ {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
@@ -175,6 +226,6 @@ return {
         -- Configuration here, or leave empty to use defaults
       })
     end
-  },
+  }, ]]
 
 }
