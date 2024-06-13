@@ -9,6 +9,21 @@ return {
           theme = "catppuccin",
           -- component_separators = '|',
           -- section_separators = '',
+          -- component_separators = { left = '', right = ''},
+          -- section_separators = { left = '', right = ''},
+          -- component_separators = { left = '', right = ''},
+          component_separators = { left = '', right = ''},
+          section_separators = { left = '', right = ''},
+          globalstatus = false,
+          ignore_focus = {"neo-tree", "trouble"},
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
         },
         sections = {
           lualine_c = {
@@ -31,25 +46,25 @@ return {
                 newfile = '[New]',     -- Text to show for newly created file before first write
               }
             },
-            -- lualine_x = {
-            --   {
-            --     'fileformat',
-            --     symbols = {
-            --       unix = '', -- e712
-            --       dos = '',  -- e70f
-            --       mac = '',  -- e711
-            --     },
-            --   },
-            --   {
-            --     'filetype',
-            --     colored = true,   -- Displays filetype icon in color if set to true
-            --     icon_only = false, -- Display only an icon for filetype
-            --     icon = { align = 'right' }, -- Display filetype icon on the right hand side
-            --     -- icon =    {'X', align='right'}
-            --     -- Icon string ^ in table is ignored in filetype component
+          },
+          lualine_x = {
+            -- {
+            --   'fileformat',
+            --   symbols = {
+            --     unix = '', -- e712
+            --     dos = '',  -- e70f
+            --     mac = '',  -- e711
             --   },
             -- },
-          }
+            {
+              'filetype',
+              colored = true,   -- Displays filetype icon in color if set to true
+              icon_only = false, -- Display only an icon for filetype
+              icon = { align = 'right' }, -- Display filetype icon on the right hand side
+              -- icon =    {'X', align='right'}
+              -- Icon string ^ in table is ignored in filetype component
+            },
+          },
         },
         -- sections = {
         --   lualine_x = {
