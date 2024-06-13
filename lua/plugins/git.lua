@@ -17,7 +17,7 @@ return {
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
 
-  --[[ {
+  {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     ft = { "gitcommit", "diff" },
@@ -46,6 +46,10 @@ return {
         untracked = { text = "│" },
       },
       current_line_blame = true,
+      signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
+      numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+      linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+      word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
         vim.keymap.set('n', '<leader>td', require("gitsigns").toggle_deleted, { desc = 'Toggle deleted', silent = true })
@@ -75,7 +79,7 @@ return {
     config = function(_, opts)
       require("gitsigns").setup(opts)
     end,
-  }, ]]
+  },
 
   {
     "sindrets/diffview.nvim",
@@ -97,11 +101,14 @@ return {
     lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim",         -- required
-      "nvim-telescope/telescope.nvim", -- optional
+      -- "nvim-telescope/telescope.nvim", -- optional
+      "ibhagwan/fzf-lua",
       "sindrets/diffview.nvim",        -- optional
     },
     config = function()
-      require('neogit').setup()
+      require('neogit').setup({
+        graph_style = "unicode",
+      })
       vim.keymap.set('n', '<leader>nn', '<CMD>Neogit<CR>', { desc = 'Open [N]eogit' })
     end
   },
@@ -110,46 +117,4 @@ return {
     'kdheepak/lazygit.nvim',
     lazy = false,
   },
-
-  --[[ {
-    -- https://github.com/ThePrimeagen/git-worktree.nvim/pull/106
-    "brandoncc/git-worktree.nvim",
-    event = "VeryLazy",
-    branch = "catch-and-handle-telescope-related-error",
-    keys = {
-      {
-        "<leader>pw",
-        function()
-          local Job = require("plenary.job")
-
-          local current_file = vim.fn.resolve(vim.fn.expand("%"))
-          local project_root_directory = utils.get_git_root_directory(current_file)
-          local file_directory = vim.fn.fnamemodify(current_file, ":p:h")
-          local branch_name = utils.branch_name(nil, file_directory)
-
-          Job:new({
-            command = "zellij",
-            args = {
-              "run",
-              "-f",
-              "--",
-              "zsh",
-            },
-            cwd = project_root_directory,
-            on_exit = function()
-              Job:new({
-                command = "zellij",
-                args = {
-                  "action",
-                  "rename-pane",
-                  branch_name,
-                },
-              }):start()
-            end,
-          }):start()
-        end,
-      },
-    },
-    config = true
-  }, ]]
 }
