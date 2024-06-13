@@ -29,7 +29,10 @@ return {
           -- indentscope_color = "", -- catppuccin color (eg. `lavender`) Default: textlist
         },
         neogit = true,
+        diffview = true,
         cmp = true,
+        neotree = true,
+        lsp_trouble = true,
         nvimtree = {
           enabled = true,
           show_root = true, -- makes the root folder not transparent
