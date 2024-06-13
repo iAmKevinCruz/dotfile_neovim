@@ -9,7 +9,8 @@ vim.keymap.set('n', '<leader>fq', "<cmd>FzfLua quickfix<cr>", { desc = '[F]ind [
 vim.keymap.set('n', '<leader>fQ', "<cmd>FzfLua quickfix_stack<cr>", { desc = '[F]ind [Q]uickfix history stack' })
 vim.keymap.set('n', '<leader>fj', "<cmd>FzfLua jumps<cr>", { desc = '[F]ind [J]umps' })
 vim.keymap.set('n', '<leader>fm', "<cmd>FzfLua marks<cr>", { desc = '[F]ind [M]arks' })
-vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua changes<cr>", { desc = '[F]ind [M]arks' })
+vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua changes<cr>", { desc = '[F]ind [C]hanges' })
+vim.keymap.set('n', '<leader>fk', "<cmd>FzfLua keymaps<cr>", { desc = '[F]ind [K]eymaps' })
 
 return {
   {
