@@ -17,12 +17,19 @@ return {
     },
     keys = {
       {
+        "R",
+        mode = { "o", "x" },
+        function() require("flash").treesitter_search() end,
+        desc = "Treesitter Search"
+      },
+      {
         "sw",
         mode = { "n", "x" },
         function()
           -- jump to word under cursor
           require("flash").jump({pattern = vim.fn.expand("<cword>")})
         end,
+        desc = "Flash highlight word undor cursor"
       },
       {
         "ss",
@@ -31,6 +38,7 @@ return {
           -- default options: exact mode, multi window, all directions, with a backdrop
           require("flash").jump()
         end,
+        desc = "Flash"
       },
       {
         "ss",
@@ -38,6 +46,7 @@ return {
         function()
           require("flash").jump()
         end,
+        desc = "Flash"
       },
       {
         "<leader>ss",
@@ -45,6 +54,7 @@ return {
         function()
           require("flash").treesitter()
         end,
+        desc = "Flash treesitter"
       },
       {
         "r",
