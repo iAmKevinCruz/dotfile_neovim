@@ -2,6 +2,17 @@ return {
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
+    keys = {
+      {
+        "<leader>ue",
+        function()
+          require("edgy").toggle()
+        end,
+        desc = "Edgy Toggle",
+      },
+      -- stylua: ignore
+      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy Select Window" },
+    },
     init = function()
       vim.opt.laststatus = 3
       vim.opt.splitkeep = "screen"
@@ -66,6 +77,7 @@ return {
           end,
         },
         { ft = "spectre_panel", size = { height = 0.4 } },
+        { ft = "gitcommit", size = { height = 0.4 } },
       },
       left = {
         -- Neo-tree filesystem always takes half the screen height
@@ -86,15 +98,6 @@ return {
           pinned = true,
           open = "Neotree position=top buffers",
         },
-        --[[ {
-          title = "Neo-Tree Git",
-          ft = "neo-tree",
-          filter = function(buf)
-            return vim.b[buf].neo_tree_source == "git_status"
-          end,
-          pinned = true,
-          open = "Neotree position=right git_status",
-        }, ]]
         -- any other neo-tree windows
         "neo-tree",
       },
