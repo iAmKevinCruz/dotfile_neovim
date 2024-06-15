@@ -23,7 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Initialize the plugin list with plugins that are always loaded
 local plugins = {
     { 'folke/which-key.nvim', opts = {} },
-    { 'numToStr/Comment.nvim', opts = {} },
+    -- { 'numToStr/Comment.nvim', opts = {} },
     { import = 'plugins' },
 }
 

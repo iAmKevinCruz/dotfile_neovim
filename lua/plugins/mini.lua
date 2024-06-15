@@ -79,7 +79,9 @@ return {
       require('mini.surround').setup({
         search_method = 'cover',
       })
+      -- require('mini.animate').setup()
       require('mini.git').setup()
+      require('mini.comment').setup()
       require('mini.ai').setup()
       require('mini.align').setup()
       require('mini.extra').setup()
