@@ -129,13 +129,13 @@ return {
       -- vim.keymap.set('n', '<leader>fr', require('telescope.builtin').resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>fR', require('telescope.actions.history').get_simple_history, { desc = '[F]ind [R]ecent History' })
       -- vim.keymap.set('n', '<leader>fz', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[F]u[Z]zy Find Current Buffer' })
-      vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
-        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          -- winblend = 10,
-          previewer = false,
-        })
-      end, { desc = '[/] Fuzzily search in current buffer' })
+      -- vim.keymap.set('n', '<leader>/', function()
+      --   -- You can pass additional configuration to telescope to change theme, layout, etc.
+      --   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+      --     -- winblend = 10,
+      --     previewer = false,
+      --   })
+      -- end, { desc = '[/] Fuzzily search in current buffer' })
       -- vim.keymap.set('n', '<leader>fqq', '<cmd>Telescope quickfix<cr>', { desc = 'Open Telescope Quickfix' })
       -- vim.keymap.set('n', '<leader>fq', '<cmd>Telescope quickfixhistory<cr>', { desc = 'Open Telescope Quickfix History' })
 

@@ -117,6 +117,28 @@ function M.shorten(s, w, tail)
 	return s
 end
 
+--- Split a string into a Table using a pattern
+--- @param pString string # The string to split
+--- @param pPattern string # The pattern to split the string
+--- @return table # The table of split strings
+function M.split(pString, pPattern)
+   local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
+   local fpat = "(.-)" .. pPattern
+   local last_end = 1
+   local s, e, cap = pString:find(fpat, 1)
+   while s do
+      if s ~= 1 or cap ~= "" then
+     table.insert(Table,cap)
+      end
+      last_end = e+1
+      s, e, cap = pString:find(fpat, last_end)
+   end
+   if last_end <= #pString then
+      cap = pString:sub(last_end)
+      table.insert(Table, cap)
+   end
+   return Table
+end
 
 --- Get the branch name with git-dir and worktree support
 --- @param worktree table<string, string>|nil # a table specifying the `toplevel` and `gitdir` of a worktree

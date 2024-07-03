@@ -11,6 +11,7 @@ vim.keymap.set('n', '<leader>fj', "<cmd>FzfLua jumps<cr>", { desc = '[F]ind [J]u
 vim.keymap.set('n', '<leader>fm', "<cmd>FzfLua marks<cr>", { desc = '[F]ind [M]arks' })
 vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua changes<cr>", { desc = '[F]ind [C]hanges' })
 vim.keymap.set('n', '<leader>fk', "<cmd>FzfLua keymaps<cr>", { desc = '[F]ind [K]eymaps' })
+vim.keymap.set('n', '<leader>/', "<cmd>FzfLua blines<cr>", { desc = '[/] Current Buffer Fuzzy Search' })
 
 return {
   {

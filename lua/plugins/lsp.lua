@@ -18,6 +18,7 @@ return {
 
     config = function()
       -- local cmp = require('cmp')
+      local lspconfig = require("lspconfig")
       local cmp_lsp = require("cmp_nvim_lsp")
       local capabilities = vim.tbl_deep_extend(
         "force",
@@ -45,7 +46,6 @@ return {
           ['rust_analyzer'] = function() end,
 
           ["lua_ls"] = function()
-            local lspconfig = require("lspconfig")
             lspconfig.lua_ls.setup {
               capabilities = capabilities,
               settings = {
@@ -58,7 +58,6 @@ return {
             }
           end,
           ["emmet_ls"] = function()
-            local lspconfig = require("lspconfig")
             lspconfig.emmet_ls.setup {
               capabilities = capabilities,
               filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'liquid' },
@@ -73,7 +72,6 @@ return {
             }
           end,
           --[[ ["rust_analyzer"] = function()
-            local lspconfig = require("lspconfig")
             lspconfig.emmet_ls.setup({
               capabilities = capabilities,
               filetypes = {"rust"},

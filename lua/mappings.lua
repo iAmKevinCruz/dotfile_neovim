@@ -108,10 +108,10 @@ vim.keymap.set('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { silent = true, desc 
 
 -- Insert Mode
 vim.keymap.set('i', '<M-BS>', '<ESC>vbc', { desc = 'Delete word', silent = true })
-vim.keymap.set('i', '<C-h>', '<Left>', { desc = 'Move left', silent = true })
-vim.keymap.set('i', '<C-l>', '<Right>', { desc = 'Move right', silent = true })
-vim.keymap.set('i', '<C-j>', '<Down>', { desc = 'Move down', silent = true })
-vim.keymap.set('i', '<C-k>', '<Up>', { desc = 'Move up', silent = true })
+-- vim.keymap.set('i', '<C-h>', '<Left>', { desc = 'Move left', silent = true })
+-- vim.keymap.set('i', '<C-l>', '<Right>', { desc = 'Move right', silent = true })
+-- vim.keymap.set('i', '<C-j>', '<Down>', { desc = 'Move down', silent = true })
+-- vim.keymap.set('i', '<C-k>', '<Up>', { desc = 'Move up', silent = true })
 
 -- Terminal Mode
 vim.keymap.set('t', '<C-x>', vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), { desc = 'Escape terminal mode', silent = true })
@@ -151,3 +151,21 @@ vim.keymap.set('n', '<leader>pw', function()
     end,
   }):start()
 end, {desc = "Open Zellij floating pane at cwd of the git root directory"})
+
+vim.keymap.set('n', '<leader>pt', function()
+  local Job = require("plenary.job")
+
+  local current_file = vim.fn.resolve(vim.fn.expand("%"))
+  local file_directory = vim.fn.fnamemodify(current_file, ":p:h")
+  local branch_name = utils.branch_name(nil, file_directory)
+  local branch_name_short = utils.split(branch_name, "/")
+
+  Job:new({
+    command = "zellij",
+    args = {
+      "action",
+      "rename-tab",
+      branch_name_short[#branch_name_short],
+    },
+  }):start()
+end, {desc = "Change current Zellij tab name to current branch"})

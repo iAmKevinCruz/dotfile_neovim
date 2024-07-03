@@ -79,6 +79,7 @@ return {
       require('mini.surround').setup({
         search_method = 'cover',
       })
+
       -- require('mini.animate').setup()
       require('mini.git').setup()
       require('mini.comment').setup()
@@ -152,7 +153,7 @@ return {
           [' '] = {
             action = 'open',
             pair = '  ',
-            neigh_pattern = '[%%-*][%%-*]' -- adds double space if surrounded by %% or --
+            neigh_pattern = '[{%%-*][%%-*}]' -- adds double space if surrounded by %% or --
           },
         },
       })
