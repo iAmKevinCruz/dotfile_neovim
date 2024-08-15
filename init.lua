@@ -20,11 +20,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 -- Initialize the plugin list with plugins that are always loaded
 local plugins = {
-    { 'folke/which-key.nvim', opts = {} },
-    -- { 'numToStr/Comment.nvim', opts = {} },
-    { import = 'plugins' },
+  { 'folke/which-key.nvim', 
+  dependencies = { "nvim-lua/plenary.nvim", "j-morano/buffer_manager.nvim" },
+  opts = {
+      preset = "helix",
+    }
+  },
+  -- { 'numToStr/Comment.nvim', opts = {} },
+  { import = 'plugins' },
 }
 
 -- Conditionally add plugins based on certain conditions, like running in Neovide
@@ -45,15 +51,15 @@ require("mappings")
 require("autocmds")
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
+-- require('which-key').register {
+--   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
+--   ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+--   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+--   ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
+--   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+--   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+--   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+-- }
 
 -- Set GIT_EDITOR to use nvr if Neovim and nvr are available
 if vim.fn.has('nvim') == 1 and vim.fn.executable('nvr') == 1 then

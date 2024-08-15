@@ -78,11 +78,25 @@ return {
       -- require('mini.statusline').setup()
       require('mini.surround').setup({
         search_method = 'cover',
+        n_lines = 200,
       })
 
       -- require('mini.animate').setup()
       require('mini.git').setup()
-      require('mini.comment').setup()
+      require('mini.comment').setup({
+        options = {
+          custom_commentstring = function()
+            local ft = vim.bo.filetype
+            if ft == 'liquid' then
+              return '{% comment %}%s{% endcomment %}'
+            -- elseif ft == 'typescriptreact' then
+            --   return '{/* %s */}'
+            else
+              return nil
+            end
+          end,
+        }
+      })
       require('mini.ai').setup()
       require('mini.align').setup()
       require('mini.extra').setup()
@@ -102,9 +116,9 @@ return {
         -- `<CR>`, `'` does not insert pair after a letter.
         -- Only parts of tables can be tweaked (others will use these defaults).
         mappings = {
-          ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
-          ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
-          ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
+          ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\][.%A]' }, -- the %A means NOT a letter. Prevents the pair from happening if the character to the right of the cursor is a letter 
+          ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\][.%A]' },
+          ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\][.%A]' },
 
           [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
           [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
@@ -113,19 +127,19 @@ return {
           ['"'] = {
             action = 'closeopen',
             pair = '""',
-            neigh_pattern = '[^%"\\].',
+            neigh_pattern = '[^%"\\%a][.%A]',
             register = { cr = false }
           },
           ["'"] = {
             action = 'closeopen',
             pair = "''",
-            neigh_pattern = "[^%'\\].",
+            neigh_pattern = "[^%'\\%a][.%A]",
             register = { cr = false }
           },
           ['`'] = {
             action = 'closeopen',
             pair = '``',
-            neigh_pattern = '[^\\].',
+            neigh_pattern = '[^\\%a][.%A]',
             register = { cr = false }
           },
           ['%'] = {

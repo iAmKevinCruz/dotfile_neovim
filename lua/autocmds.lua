@@ -1,3 +1,5 @@
+local utils = require('utils.utils')
+
 function Remove_qf_item()
   local curqfidx = vim.fn.line('.')
   local qfall = vim.fn.getqflist()
@@ -23,3 +25,8 @@ end
 vim.cmd("command! RemoveQFItem lua Remove_qf_item()")
 vim.api.nvim_command("autocmd FileType qf nnoremap <buffer> dd :RemoveQFItem<cr>")
 
+-- Create a user command to call the function
+vim.api.nvim_create_user_command('ExportQuickfix', function(opts)
+  local filename = opts.args ~= "" and opts.args or "quickfix_export.md"
+  utils.export_quickfix_to_markdown(filename)
+end, {nargs = '?'})

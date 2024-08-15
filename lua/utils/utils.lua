@@ -188,5 +188,30 @@ function M.get_git_root_directory(current_file)
     return git_root
 end
 
+M.export_quickfix_to_markdown = function(filename)
+  local qf_list = vim.fn.getqflist()
+  local lines = {"# Quickfix List\n"}
+  
+  for _, item in ipairs(qf_list) do
+    local bufnr = item.bufnr
+    local filename = vim.fn.bufname(bufnr)
+    local lnum = item.lnum
+    local col = item.col
+    local text = item.text:gsub("|", "\\|"):gsub("\n", " ")
+    
+    table.insert(lines, string.format("- **%s**:%d:%d - %s", filename, lnum, col, text))
+  end
+  
+  local file = io.open(filename, "w")
+  if file then
+    file:write(table.concat(lines, "\n"))
+    file:close()
+    print("Quickfix list exported to " .. filename)
+  else
+    print("Failed to open file for writing: " .. filename)
+  end
+  
+end
+
 return M
 

@@ -8,6 +8,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- Select previously pasted lines
+vim.keymap.set('n', 'gp', "`[v`]", { silent = true })
+
 -- toggle wrap 
 vim.keymap.set('n', 'yow', function()
   local wrap_option = vim.wo.wrap

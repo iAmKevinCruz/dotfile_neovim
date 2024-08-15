@@ -1,4 +1,36 @@
+-- toggle cmp completion
+-- vim.g.cmp_toggle_flag = false -- initialize
+-- local normal_buftype = function()
+--   return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+-- end
+-- local toggle_completion = function()
+--   local ok, cmp = pcall(require, "cmp")
+--   if ok then
+--     local next_cmp_toggle_flag = not vim.g.cmp_toggle_flag
+--     if next_cmp_toggle_flag then
+--       print("completion on")
+--     else
+--       print("completion off")
+--     end
+--     cmp.setup({
+--       enabled = function()
+--         vim.g.cmp_toggle_flag = next_cmp_toggle_flag
+--         if next_cmp_toggle_flag then
+--           return normal_buftype
+--         else
+--           return next_cmp_toggle_flag
+--         end
+--       end,
+--     })
+--   else
+--     print("completion not available")
+--   end
+-- end
+
 -- Keymaps
+vim.keymap.set('n', '<leader>tc', function()
+  toggle_completion()
+end, { desc = '[T]oggle [C]ompletion', silent = true })
 
 return {
   {
@@ -26,6 +58,7 @@ return {
     config = function ()
       -- [[ Configure nvim-cmp ]]
       -- See `:help cmp`
+      -- local suggestion = require('supermaven-nvim.completion_preview')
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
@@ -56,10 +89,39 @@ return {
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete {},
-          ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          },
+          -- ['<CR>'] = cmp.mapping.confirm {
+          --   behavior = cmp.ConfirmBehavior.Replace,
+          --   select = true,
+          -- },
+          ["<C-y>"] = cmp.mapping({
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                -- toggle_completion()
+              else
+                fallback()
+              end
+            end,
+          }),
+          -- ['<Tab>'] = cmp.mapping(function(fallback)
+          --   if suggestion.has_suggestion() then
+          --     suggestion.on_accept_suggestion()
+          --     cmp.close()
+          --   else
+          --     fallback()
+          --   end
+          -- end, { 'i', 's' }),
+          -- ["<C-k>"] = cmp.mapping({
+          --   i = function()
+          --     if cmp.visible() then
+          --       cmp.abort()
+          --       toggle_completion()
+          --     else
+          --       cmp.complete()
+          --       toggle_completion()
+          --     end
+          --   end,
+          -- }),
           --[[ ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -81,7 +143,7 @@ return {
         },
         sources = {
           { name = "nvim_lsp" },
-          { name = "luasnip" },
+          { name = "path" },
           { name = "buffer",
             option = {
               get_bufnrs = function()
@@ -89,10 +151,24 @@ return {
               end
             }
           },
+          { name = "luasnip" },
           { name = "nvim_lua" },
-          { name = "path" },
+          -- { name = "supermaven" },
           { name = "codeium" },
-          { name = "orgmode" },
+          -- { name = "orgmode" },
+        },
+        formatting = {
+          format = function(entry, vim_item)
+            -- this wiil remove duplicated completion items
+            vim_item.dup = ({
+              buffer = 0,
+              nvim_lsp = 0,
+              nvim_lua = 0,
+              luasnip = 0,
+              -- supermaven = 0,
+            })[entry.source.name] or 0
+            return vim_item
+          end,
         },
         completion = {
           completeopt = "menu,menuone",

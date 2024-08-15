@@ -7,6 +7,7 @@ return {
     opts = {
       settings = {
         save_on_toggle = true,
+        sync_on_ui_close = true,
       },
     },
     config = function(_, opts)
@@ -16,12 +17,12 @@ return {
       vim.keymap.set("n", "<leader>A", function() harpoon:list():add() end)
       vim.keymap.set("n", "<leader>a", function() 
         harpoon.ui:toggle_quick_menu(harpoon:list()) 
-      end)
+      end, { desc = "Open Harpoon list" })
 
       for i=0,9 do
         vim.keymap.set("n", '<M-'..i ..'>', function ()
           harpoon:list():select(i)
-        end)
+        end, { desc = "Open Harpoon item: " .. i })
       end
 
       -- Toggle previous & next buffers stored within Harpoon list
@@ -63,7 +64,7 @@ return {
       end
 
       vim.keymap.set("n", "<leader>ta", function()
-        toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
+        toggle_telescope(harpoon:list()) end, { desc = "Open harpoon telescope" })
     end
   }
 }

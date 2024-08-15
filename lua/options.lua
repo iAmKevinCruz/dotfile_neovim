@@ -3,6 +3,8 @@ local g = vim.g
 
 -- Set highlight on search
 vim.o.hlsearch = true
+-- vim.o.incsearch = false
+vim.o.inccommand = "split"
 
 -- Make line numbers default
 vim.wo.number = true

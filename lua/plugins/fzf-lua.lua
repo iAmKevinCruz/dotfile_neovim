@@ -21,6 +21,36 @@ return {
     config = function()
       -- calling `setup` is optional for customization
       local actions = require "fzf-lua.actions"
+
+      -- copied this from the fzf docs. I just changed the bottom to open trouble
+      function openQfInTrouble(selected,opts)
+        local utils = require "fzf-lua.utils"
+        local path = require "fzf-lua.path"
+        local qf_list = {}
+        for i = 1, #selected do
+          local file = path.entry_to_file(selected[i], opts)
+          local text = file.stripped:match(":%d+:%d?%d?%d?%d?:?(.*)$")
+          table.insert(qf_list, {
+            filename = file.bufname or file.path or file.uri,
+            lnum = file.line,
+            col = file.col,
+            text = text,
+          })
+        end
+        local title = string.format("[FzfLua] %s%s",
+          opts.__INFO and opts.__INFO.cmd .. ": " or "",
+          utils.resume_get("query", opts) or "")
+        -- Set the quickfix title to last query and
+        -- append a new list to end of the stack (#635)
+        vim.fn.setqflist({}, " ", {
+          nr = "$",
+          items = qf_list,
+          title = title,
+          -- nr = nr,
+        })
+        vim.cmd([[Trouble qflist open focus=true]])
+      end
+
       require'fzf-lua'.setup {
         -- fzf_bin         = 'sk',            -- use skim instead of fzf?
         -- https://github.com/lotabout/skim
@@ -143,7 +173,10 @@ return {
             ["ctrl-s"]      = actions.file_split,
             ["ctrl-v"]      = actions.file_vsplit,
             ["ctrl-t"]      = actions.file_tabedit,
-            ["alt-q"]       = actions.file_sel_to_qf,
+            -- ["alt-q"]       = actions.file_sel_to_qf,
+            ["alt-q"]       = function(selected, opts)
+              openQfInTrouble(selected, opts)
+            end,
             ["alt-l"]       = actions.file_sel_to_ll,
           },
           buffers = {
@@ -448,7 +481,9 @@ return {
           -- default options are controlled by 'rg|grep_opts'
           -- cmd            = "rg --vimgrep",
           grep_opts         = "--binary-files=without-match --line-number --recursive --color=auto --perl-regexp -e",
-          rg_opts           = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+          -- rg_opts           = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+          rg_opts           = "--multiline --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+          multiline         = 2,
           -- set to 'true' to always parse globs in both 'grep' and 'live_grep'
           -- search strings will be split using the 'glob_separator' and translated
           -- to '--iglob=' arguments, requires 'rg'
