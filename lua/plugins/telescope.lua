@@ -19,9 +19,17 @@ return {
         end,
       },
       'nvim-telescope/telescope-smart-history.nvim',
-      'kkharji/sqlite.lua'
+      'kkharji/sqlite.lua',
+      'folke/trouble.nvim'
     },
     config = function()
+      local actions = require('telescope.actions')
+
+      local send_to_qflist_and_open_in_trouble = function(prompt_bufnr)
+        actions.send_selected_to_qflist(prompt_bufnr)
+        vim.cmd [[Trouble qflist open focus=true]]
+      end
+
       local function flash(prompt_bufnr)
         require("flash").jump({
           pattern = "^",
@@ -93,10 +101,19 @@ return {
           buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
           mappings = {
             n = {
-              ["q"] = require("telescope.actions").close,
+              ["q"] = actions.close,
               s = flash
             },
-            i = { ["<c-s>"] = flash },
+            i = {
+              ["<c-y>"] = actions.select_default,
+              ["<c-x>"] = flash,
+              ["<c-s>"] = actions.select_horizontal,
+              ["<S-down>"] = actions.preview_scrolling_down,
+              ["<S-up>"] = actions.preview_scrolling_up,
+              ["<S-right>"] = actions.toggle_selection,
+              ["<M-a>"] = actions.select_all,
+              ["<M-q>"] = send_to_qflist_and_open_in_trouble,
+            },
           },
         },
 
@@ -124,7 +141,7 @@ return {
       --   require('telescope.builtin').grep_string({ search = word })
       -- end, {desc = '[F]ind [W]ord under cursor'})
       vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[F]ind [O]ld files' })
-      -- vim.keymap.set('n', '<leader>b', ":lua require('telescope.builtin').buffers({sort_mru=true,ignore_current_buffer=true})<CR>", { desc = 'Find existing [B]uffers (sorted)' })
+      vim.keymap.set('n', '<leader>b', ":lua require('telescope.builtin').buffers({sort_mru=true,ignore_current_buffer=true})<CR>", { desc = 'Find existing [B]uffers (sorted)' })
       vim.keymap.set('n', '<leader>gt', require('telescope.builtin').git_status, { desc = 'Search [G]it s[T]atus' })
       -- vim.keymap.set('n', '<leader>fr', require('telescope.builtin').resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>fR', require('telescope.actions.history').get_simple_history, { desc = '[F]ind [R]ecent History' })

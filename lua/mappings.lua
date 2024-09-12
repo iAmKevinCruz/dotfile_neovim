@@ -4,6 +4,9 @@ local utils = require('utils.utils')
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+vim.keymap.set('n', '*', '*``', { silent = true, desc = "Highlight word without jumping" })
+vim.keymap.set('n', '#', '#``', { silent = true, desc = "Highlight word without jumping" })
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -39,7 +42,7 @@ vim.keymap.set('n', '<leader>k',function()
 
 
 -- Normal Mode
-vim.keymap.set('n', ';', ':', { desc = 'enter command mode', silent = true, nowait = true })
+-- vim.keymap.set('n', ';', ':', { desc = 'enter command mode', silent = true, nowait = true })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center cursor', silent = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center cursor', silent = true })
 vim.keymap.set('n', '<leader>q', ':q <CR>', { desc = 'Exit (q) buffer', silent = true })
@@ -111,6 +114,8 @@ vim.keymap.set('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { silent = true, desc 
 
 -- Insert Mode
 vim.keymap.set('i', '<M-BS>', '<ESC>vbc', { desc = 'Delete word', silent = true })
+vim.keymap.set('i', '<M-Left>', '<ESC>bi', { desc = 'Move left 1 word', silent = true })
+vim.keymap.set('i', '<M-Right>', '<ESC>ea', { desc = 'Move right 1 word', silent = true })
 -- vim.keymap.set('i', '<C-h>', '<Left>', { desc = 'Move left', silent = true })
 -- vim.keymap.set('i', '<C-l>', '<Right>', { desc = 'Move right', silent = true })
 -- vim.keymap.set('i', '<C-j>', '<Down>', { desc = 'Move down', silent = true })

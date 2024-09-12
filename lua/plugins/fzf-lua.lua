@@ -2,7 +2,7 @@ vim.keymap.set('n', '<leader>ff', "<cmd>FzfLua files<cr>", { desc = '[F]ind [F]i
 vim.keymap.set('n', '<leader>fW', "<cmd>FzfLua grep_cword<cr>", { desc = '[F]ind [W]ord under cusoror' })
 vim.keymap.set('n', '<leader>fw', "<cmd>FzfLua live_grep<cr>", { desc = '[F]ind [W]ord' })
 vim.keymap.set('v', '<leader>fw', "<cmd>FzfLua grep_visual<cr>", { desc = '[F]ind [W]ord visual selected' })
-vim.keymap.set('n', '<leader>b', "<cmd>FzfLua buffers<cr>", { desc = 'Find existing [B]uffers (sorted)' })
+-- vim.keymap.set('n', '<leader>b', "<cmd>FzfLua buffers<cr>", { desc = 'Find existing [B]uffers (sorted)' })
 vim.keymap.set('n', '<leader>fr', "<cmd>FzfLua resume<cr>", { desc = '[F]ind [R]esume' })
 vim.keymap.set('n', '<leader>fz', "<cmd>FzfLua grep_curbuf<cr>", { desc = '[F]u[Z]zy current buffer' })
 vim.keymap.set('n', '<leader>fq', "<cmd>FzfLua quickfix<cr>", { desc = '[F]ind [Q]uickfix items' })
@@ -170,6 +170,7 @@ return {
             -- to open all files whether single or multiple
             -- ["default"]     = actions.file_edit,
             ["default"]     = actions.file_edit_or_qf,
+            ["ctrl-y"]     = actions.file_edit_or_qf,
             ["ctrl-s"]      = actions.file_split,
             ["ctrl-v"]      = actions.file_vsplit,
             ["ctrl-t"]      = actions.file_tabedit,
@@ -183,6 +184,7 @@ return {
             -- providers that inherit these actions:
             --   buffers, tabs, lines, blines
             ["default"]     = actions.buf_edit,
+            ["ctrl-y"]     = actions.buf_edit,
             ["ctrl-s"]      = actions.buf_split,
             ["ctrl-v"]      = actions.buf_vsplit,
             ["ctrl-t"]      = actions.buf_tabedit,

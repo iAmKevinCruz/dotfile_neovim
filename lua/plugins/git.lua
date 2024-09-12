@@ -92,6 +92,21 @@ return {
           listing_style = "list"
         }
       })
+
+      -- can use this to replace the `origin/main` so the `main` can be dynamically picked.
+      local function get_default_branch_name()
+        local res = vim
+          .system({ 'git', 'rev-parse', '--verify', 'main' }, { capture_output = true })
+          :wait()
+        return res.code == 0 and 'main' or 'master'
+      end
+
+      vim.keymap.set('n', '<leader>gdd', '<CMD>DiffviewOpen<CR>', { desc = 'Open DiffView working tree' })
+      vim.keymap.set('n', '<leader>gdm', '<CMD>DiffviewOpen HEAD..origin/main<CR>', { desc = 'Open DiffView compare main with HEAD' })
+      vim.keymap.set('n', '<leader>gdhh', '<CMD>DiffviewFileHistory<CR>', { desc = 'Open DiffView History for Repo' })
+      vim.keymap.set('n', '<leader>gdhf', '<CMD>DiffviewFileHistory --follow %<CR>', { desc = 'Open DiffView History for current file' }) -- the `--follow` flag follows any file name change
+      vim.keymap.set('v', '<leader>gdhl', "<ESC><CMD>'<,'>DiffviewFileHistory --follow<CR>", { desc = 'Open DiffView History for selection' }) -- the `--follow` flag follows any file name change
+      vim.keymap.set('n', '<leader>gdhl', '<CMD>.DiffviewFileHistory --follow<CR>', { desc = 'Open DiffView History for current line' }) -- the `--follow` flag follows any file name change
     end
   },
 

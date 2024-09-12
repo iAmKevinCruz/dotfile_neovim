@@ -91,3 +91,8 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
   { border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' } }
 )
 -- END LSP Settings
+
+-- sync buffers automatically
+opt.autoread = true
+-- disable neovim generation a sswapfile and showing error
+opt.swapfile = false
