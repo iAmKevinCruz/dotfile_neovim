@@ -11,7 +11,8 @@ return {
           label = { exclude = "hjkliIaArdcCvpPygSx" }
         },
         search = {
-          enabled = false
+          enabled = false,
+          highlight = { backdrop = true },
         }
       }
     },
@@ -109,6 +110,12 @@ return {
             end,
           })
         end,
+      },
+      {
+        "<c-s>",
+        mode = { "c" },
+        function() require("flash").toggle() end,
+        desc = "Toggle Flash Search"
       },
     },
   },

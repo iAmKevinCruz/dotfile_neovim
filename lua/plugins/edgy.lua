@@ -77,7 +77,7 @@ return {
           end,
         },
         { ft = "spectre_panel", size = { height = 0.4 } },
-        { ft = "gitcommit", size = { height = 0.4 } },
+        -- { ft = "gitcommit", size = { height = 0.4 } },
       },
       left = {
         -- Neo-tree filesystem always takes half the screen height

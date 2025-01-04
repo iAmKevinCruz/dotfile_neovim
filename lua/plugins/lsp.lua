@@ -32,8 +32,12 @@ return {
         ensure_installed = {
           "lua_ls",
           -- "rust_analyzer",
-          -- "tsserver",
-          "emmet_ls"
+          "tsserver",
+          "emmet_ls",
+          "tailwindcss",
+          "prettierd",
+          "prettier",
+          "shopify_theme_ls",
         },
         handlers = {
           function(server_name) -- default handler (optional)
