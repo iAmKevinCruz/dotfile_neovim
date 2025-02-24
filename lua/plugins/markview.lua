@@ -13,44 +13,51 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,      -- Recommended
-    -- ft = "markdown" -- If you decide to lazy-load anyway
-
+    ft = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante" },
     dependencies = {
       -- You will not need this if you installed the
       -- parsers manually
       -- Or if the parsers are in your $RUNTIMEPATH
       "nvim-treesitter/nvim-treesitter",
-
-      "nvim-tree/nvim-web-devicons"
+      "echasnovski/mini.icons", -- or nvim-tree/nvim-web-devicons
     },
     opts = {
-      block_quotes = {
-        enable = true,
-
-        default = {
-          border = "▋",
-          border_hl = "MarkviewBlockQuoteDefault"
-        },
-
-        callouts = {
-          {
-            match_string = "bible",
-            callout_preview = " Bible",
-            callout_preview_hl = "MarkviewBlockQuoteNote",
-
-            custom_title = true,
-            custom_icon = " ",
-
-            border = "▋",
-            border_hl = "MarkviewBlockQuoteDefault"
-          }
-        }
-      }
+      preview = {
+        filetypes = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante" },
+        ignore_buftypes = {},
+      },
+      max_length = 99999,
+      -- block_quotes = {
+      --   enable = true,
+      --
+      --   default = {
+      --     border = "▋",
+      --     border_hl = "MarkviewBlockQuoteDefault"
+      --   },
+      --
+      --   -- callouts = {
+      --   --   {
+      --   --     match_string = "bible",
+      --   --     callout_preview = " Bible",
+      --   --     callout_preview_hl = "MarkviewBlockQuoteNote",
+      --   --
+      --   --     custom_title = true,
+      --   --     custom_icon = " ",
+      --   --
+      --   --     border = "▋",
+      --   --     border_hl = "MarkviewBlockQuoteDefault"
+      --   --   }
+      --   -- }
+      -- }
     },
     config = function(_, opts)
       require("markview").setup(opts)
+      -- Load the checkboxes module.
+      require("markview.extras.checkboxes").setup();
+      require("markview.extras.editor").setup();
+      require("markview.extras.headings").setup();
 
-      vim.keymap.set('n', '<leader>tm', '<cmd>Markview toggleAll<cr>', { silent = true, desc = "[T]oggle [M]arkview" })
+      vim.keymap.set('n', '<leader>tm', '<cmd>Markview Toggle<cr>', { silent = true, desc = "[T]oggle [M]arkview" })
       -- require("markview").setup({
       --   modes = { "n", "no", "c" }, -- Change these modes
       --   -- to what you need

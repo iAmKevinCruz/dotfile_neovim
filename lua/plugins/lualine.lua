@@ -2,11 +2,77 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+    requires = {
+      "echasnovski/mini.icons", -- or nvim-tree/nvim-web-devicons
+      opt = true
+    },
     config = function()
+      local p = require("oldworld.palette")
+
+      local oldworld_theme = {
+        normal = {
+          a = { fg = p.bg, bg = p.red, gui = "bold" },
+          b = { fg = p.fg, bg = p.gray2 },
+          c = { fg = p.fg, bg = p.gray1 },
+        },
+        command = { a = { fg = p.bg, bg = p.yellow, gui = "bold" } },
+        insert = { a = { fg = p.bg, bg = p.purple, gui = "bold" } },
+        visual = { a = { fg = p.bg, bg = p.magenta, gui = "bold" } },
+        terminal = { a = { fg = p.bg, bg = p.green, gui = "bold" } },
+        replace = { a = { fg = p.bg, bg = p.orange, gui = "bold" } },
+        inactive = {
+          a = { fg = p.gray4, bg = p.bg_dark, gui = "bold" },
+          b = { fg = p.gray4, bg = p.bg_dark },
+          c = { fg = p.gray4, bg = p.bg_dark },
+        },
+      }
+
+      local p = require("rose-pine.palette")
+      local config = require("rose-pine.config")
+
+      local bg_base = p.base
+      if config.options.styles.transparency then
+        bg_base = "NONE"
+      end
+
+      local rose_pine_theme = {
+        normal = {
+          a = { bg = p.rose, fg = p.base, gui = "bold" },
+          b = { bg = p.overlay, fg = p.rose },
+          c = { bg = bg_base, fg = p.text },
+        },
+        insert = {
+          a = { bg = p.foam, fg = p.base, gui = "bold" },
+          b = { bg = p.overlay, fg = p.foam },
+          c = { bg = bg_base, fg = p.text },
+        },
+        visual = {
+          a = { bg = p.iris, fg = p.base, gui = "bold" },
+          b = { bg = p.overlay, fg = p.iris },
+          c = { bg = bg_base, fg = p.text },
+        },
+        replace = {
+          a = { bg = p.pine, fg = p.base, gui = "bold" },
+          b = { bg = p.overlay, fg = p.pine },
+          c = { bg = bg_base, fg = p.text },
+        },
+        command = {
+          a = { bg = p.love, fg = p.base, gui = "bold" },
+          b = { bg = p.overlay, fg = p.love },
+          c = { bg = bg_base, fg = p.text },
+        },
+        inactive = {
+          a = { bg = bg_base, fg = p.muted, gui = "bold" },
+          b = { bg = bg_base, fg = p.muted },
+          c = { bg = bg_base, fg = p.muted },
+        },
+      }
+
       require('lualine').setup {
         options = {
           theme = "catppuccin",
+          theme = rose_pine_theme,
+          -- theme = oldworld_theme,
           -- component_separators = '|',
           -- section_separators = '',
           -- component_separators = { left = '', right = ''},
@@ -15,7 +81,7 @@ return {
           component_separators = { left = '', right = ''},
           section_separators = { left = '', right = ''},
           globalstatus = false,
-          ignore_focus = {"neo-tree", "trouble"},
+          ignore_focus = {"neo-tree", "trouble", "Avante"},
         },
         inactive_sections = {
           lualine_a = {},

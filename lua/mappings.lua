@@ -4,8 +4,8 @@ local utils = require('utils.utils')
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
-vim.keymap.set('n', '*', '*``', { silent = true, desc = "Highlight word without jumping" })
-vim.keymap.set('n', '#', '#``', { silent = true, desc = "Highlight word without jumping" })
+-- vim.keymap.set('n', '*', '*``', { silent = true, desc = "Highlight word without jumping" })
+-- vim.keymap.set('n', '#', '#``', { silent = true, desc = "Highlight word without jumping" })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -43,8 +43,8 @@ vim.keymap.set('n', '<leader>k',function()
 
 -- Normal Mode
 -- vim.keymap.set('n', ';', ':', { desc = 'enter command mode', silent = true, nowait = true })
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center cursor', silent = true })
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center cursor', silent = true })
+-- vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center cursor', silent = true })
+-- vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center cursor', silent = true })
 vim.keymap.set('n', '<leader>q', ':q <CR>', { desc = 'Exit (q) buffer', silent = true })
 vim.keymap.set('n', '<Leader>to', '<CMD>tabnew<CR>', { desc = 'Create new tab', silent = true })
 vim.keymap.set('n', '<Leader>tx', '<CMD>tabclose<CR>', { desc = 'Close tab', silent = true })
@@ -91,6 +91,8 @@ vim.keymap.set('n', '<leader>ll', '<cmd>ALEFix prettier<cr>', { desc = 'ALEFix p
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Window left', silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Window right', silent = true })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Window down', silent = true })
+-- this one is only here to make the c-j work. Idk why this is. Apparently, c-m and c-j are the same in some kind of terminal ascii way
+vim.keymap.set('n', '<C-m>', '<C-w>j', { desc = 'Window down', silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Window up', silent = true })
 
 -- save

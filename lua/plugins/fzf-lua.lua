@@ -1,23 +1,25 @@
-vim.keymap.set('n', '<leader>ff', "<cmd>FzfLua files<cr>", { desc = '[F]ind [F]iles' })
-vim.keymap.set('n', '<leader>fW', "<cmd>FzfLua grep_cword<cr>", { desc = '[F]ind [W]ord under cusoror' })
-vim.keymap.set('n', '<leader>fw', "<cmd>FzfLua live_grep<cr>", { desc = '[F]ind [W]ord' })
-vim.keymap.set('v', '<leader>fw', "<cmd>FzfLua grep_visual<cr>", { desc = '[F]ind [W]ord visual selected' })
+-- vim.keymap.set('n', '<leader>ff', "<cmd>FzfLua files<cr>", { desc = '[F]ind [F]iles' })
+-- vim.keymap.set('n', '<leader>fW', "<cmd>FzfLua grep_cword<cr>", { desc = '[F]ind [W]ord under cusoror' })
+-- vim.keymap.set('n', '<leader>fw', "<cmd>FzfLua live_grep<cr>", { desc = '[F]ind [W]ord' })
+-- vim.keymap.set('v', '<leader>fw', "<cmd>FzfLua grep_visual<cr>", { desc = '[F]ind [W]ord visual selected' })
 -- vim.keymap.set('n', '<leader>b', "<cmd>FzfLua buffers<cr>", { desc = 'Find existing [B]uffers (sorted)' })
-vim.keymap.set('n', '<leader>fr', "<cmd>FzfLua resume<cr>", { desc = '[F]ind [R]esume' })
+-- vim.keymap.set('n', '<leader>fr', "<cmd>FzfLua resume<cr>", { desc = '[F]ind [R]esume' })
 vim.keymap.set('n', '<leader>fz', "<cmd>FzfLua grep_curbuf<cr>", { desc = '[F]u[Z]zy current buffer' })
-vim.keymap.set('n', '<leader>fq', "<cmd>FzfLua quickfix<cr>", { desc = '[F]ind [Q]uickfix items' })
+-- vim.keymap.set('n', '<leader>fq', "<cmd>FzfLua quickfix<cr>", { desc = '[F]ind [Q]uickfix items' })
 vim.keymap.set('n', '<leader>fQ', "<cmd>FzfLua quickfix_stack<cr>", { desc = '[F]ind [Q]uickfix history stack' })
-vim.keymap.set('n', '<leader>fj', "<cmd>FzfLua jumps<cr>", { desc = '[F]ind [J]umps' })
-vim.keymap.set('n', '<leader>fm', "<cmd>FzfLua marks<cr>", { desc = '[F]ind [M]arks' })
+-- vim.keymap.set('n', '<leader>fj', "<cmd>FzfLua jumps<cr>", { desc = '[F]ind [J]umps' })
+-- vim.keymap.set('n', '<leader>fm', "<cmd>FzfLua marks<cr>", { desc = '[F]ind [M]arks' })
 vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua changes<cr>", { desc = '[F]ind [C]hanges' })
-vim.keymap.set('n', '<leader>fk', "<cmd>FzfLua keymaps<cr>", { desc = '[F]ind [K]eymaps' })
-vim.keymap.set('n', '<leader>/', "<cmd>FzfLua blines<cr>", { desc = '[/] Current Buffer Fuzzy Search' })
+-- vim.keymap.set('n', '<leader>fk', "<cmd>FzfLua keymaps<cr>", { desc = '[F]ind [K]eymaps' })
+-- vim.keymap.set('n', '<leader>/', "<cmd>FzfLua blines<cr>", { desc = '[/] Current Buffer Fuzzy Search' })
 
 return {
   {
     "ibhagwan/fzf-lua",
     -- optional for icon support
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "echasnovski/mini.icons", -- or nvim-tree/nvim-web-devicons
+    },
     config = function()
       -- calling `setup` is optional for customization
       local actions = require "fzf-lua.actions"

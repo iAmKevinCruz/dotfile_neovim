@@ -16,17 +16,17 @@ vim.keymap.set('n', '<h', function()
 end, { desc = 'MiniDiff Next Hunk', silent = true })
 
 -- mini.pick
-vim.keymap.set('n', '<leader>mff', '<CMD>Pick files<CR>', { desc = '[M]iniPick [F]ind [F]iles', silent = true })
-vim.keymap.set('n', '<leader>mfb', '<CMD>Pick buffers<CR>', { desc = '[M]iniPick [F]ind [B]uffers', silent = true })
-vim.keymap.set('n', '<leader>mfw', '<CMD>Pick grep_live<CR>', { desc = '[M]iniPick [F]ind [W]ord (grep_live)', silent = true })
-vim.keymap.set('n', '<leader>mfr', '<CMD>Pick resume<CR>', { desc = '[M]iniPick [F]ind [R]esume', silent = true })
-vim.keymap.set('n', '<leader>mhs', '<CMD>Pick history scope="/"<CR>', { desc = '[M]iniPick [H]istory [S]earch', silent = true })
-vim.keymap.set('n', '<leader>mhc', '<CMD>Pick history scope=":"<CR>', { desc = '[M]iniPick [H]istory [C]ommand', silent = true })
-vim.keymap.set('n', '<leader>mjl', '<CMD>Pick list scope="jump"<CR>', { desc = '[M]iniPick [J]ump [L]ist', silent = true })
-vim.keymap.set('n', '<leader>mqf', '<CMD>Pick list scope="quickfix"<CR>', { desc = '[M]iniPick [Q]uick [F]ix', silent = true })
-vim.keymap.set('n', '<leader>mm', '<CMD>Pick marks<CR>', { desc = '[M]iniPick [M]arks', silent = true })
-vim.keymap.set('n', '<leader>mr', '<CMD>Pick registers<CR>', { desc = '[M]iniPick [M]arks', silent = true })
-vim.keymap.set('n', '<leader>mss', '<CMD>Pick spellsuggest<CR>', { desc = '[M]iniPick [S]pell [S]uggest', silent = true })
+-- vim.keymap.set('n', '<leader>mff', '<CMD>Pick files<CR>', { desc = '[M]iniPick [F]ind [F]iles', silent = true })
+-- vim.keymap.set('n', '<leader>mfb', '<CMD>Pick buffers<CR>', { desc = '[M]iniPick [F]ind [B]uffers', silent = true })
+-- vim.keymap.set('n', '<leader>mfw', '<CMD>Pick grep_live<CR>', { desc = '[M]iniPick [F]ind [W]ord (grep_live)', silent = true })
+-- vim.keymap.set('n', '<leader>mfr', '<CMD>Pick resume<CR>', { desc = '[M]iniPick [F]ind [R]esume', silent = true })
+-- vim.keymap.set('n', '<leader>mhs', '<CMD>Pick history scope="/"<CR>', { desc = '[M]iniPick [H]istory [S]earch', silent = true })
+-- vim.keymap.set('n', '<leader>mhc', '<CMD>Pick history scope=":"<CR>', { desc = '[M]iniPick [H]istory [C]ommand', silent = true })
+-- vim.keymap.set('n', '<leader>mjl', '<CMD>Pick list scope="jump"<CR>', { desc = '[M]iniPick [J]ump [L]ist', silent = true })
+-- vim.keymap.set('n', '<leader>mqf', '<CMD>Pick list scope="quickfix"<CR>', { desc = '[M]iniPick [Q]uick [F]ix', silent = true })
+-- vim.keymap.set('n', '<leader>mm', '<CMD>Pick marks<CR>', { desc = '[M]iniPick [M]arks', silent = true })
+-- vim.keymap.set('n', '<leader>mr', '<CMD>Pick registers<CR>', { desc = '[M]iniPick [M]arks', silent = true })
+-- vim.keymap.set('n', '<leader>mss', '<CMD>Pick spellsuggest<CR>', { desc = '[M]iniPick [S]pell [S]uggest', silent = true })
 
 return {
   {
@@ -97,13 +97,35 @@ return {
           end,
         }
       })
-      require('mini.ai').setup()
+      local ai = require("mini.ai")
+      ai.setup({
+        n_lines = 500,
+        custom_textobjects = {
+          o = ai.gen_spec.treesitter({ -- code block
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }),
+          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
+          d = { "%f[%d]%d+" }, -- digits
+          e = { -- Word with case
+            { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
+            "^().*()$",
+          },
+          u = ai.gen_spec.function_call(), -- u for "Usage"
+          U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+        },
+      })
+
       require('mini.align').setup()
       require('mini.extra').setup()
       require('mini.cursorword').setup()
       require('mini.splitjoin').setup()
+      require('mini.icons').setup()
       require('mini.sessions').setup()
-      require('mini.pick').setup()
+      -- require('mini.pick').setup()
+      require('mini.bracketed').setup()
       require('mini.pairs').setup({
         -- In which modes mappings from this `config` should be created
         modes = { insert = true, command = false, terminal = false },
@@ -207,13 +229,13 @@ return {
       local map_split = function(buf_id, lhs, direction)
         local rhs = function()
           -- Make new window and set it as target
-          local new_target_window
-          vim.api.nvim_win_call(MiniFiles.get_target_window(), function()
+          local cur_target = MiniFiles.get_explorer_state().target_window
+          local new_target = vim.api.nvim_win_call(cur_target, function()
             vim.cmd(direction .. ' split')
-            new_target_window = vim.api.nvim_get_current_win()
+            return vim.api.nvim_get_current_win()
           end)
 
-          MiniFiles.set_target_window(new_target_window)
+          MiniFiles.set_target_window(new_target)
           MiniFiles.go_in({close_on_file = true})
         end
 
@@ -222,11 +244,11 @@ return {
         vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
       end
 
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "MiniFilesBufferCreate",
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'MiniFilesBufferCreate',
         callback = function(args)
           local buf_id = args.data.buf_id
-          vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id })
+          -- Tweak keys to your liking
           map_split(buf_id, 'gs', 'belowright horizontal')
           map_split(buf_id, 'gv', 'belowright vertical')
         end,

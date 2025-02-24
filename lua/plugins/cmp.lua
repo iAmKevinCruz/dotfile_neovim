@@ -138,6 +138,7 @@ return {
           -- end, { 'i', 's' }),
         },
         sources = {
+          { name = "orgmode" },
           { name = "nvim_lsp" },
           { name = "path" },
           { name = "buffer",

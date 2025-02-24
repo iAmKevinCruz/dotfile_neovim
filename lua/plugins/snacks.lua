@@ -1,3 +1,14 @@
+-- creates a `:Picker` command to open the picker selector
+vim.api.nvim_create_user_command('Picker', function() Snacks.picker() end, {})
+
+-- LSP rename on mini.files file rename
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MiniFilesActionRename",
+  callback = function(event)
+    Snacks.rename.on_rename_file(event.data.from, event.data.to)
+  end,
+})
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -11,6 +22,22 @@ return {
     },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
+    scroll = {
+      animate = {
+        duration = { step = 15, total = 100 },
+        easing = "linear",
+      },
+      -- faster animation when repeating scroll after delay
+      animate_repeat = {
+        delay = 100, -- delay in ms before using the repeat animation
+        duration = { step = 5, total = 50 },
+        easing = "linear",
+      },
+      -- what buffers to animate
+      filter = function(buf)
+        return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and vim.bo[buf].buftype ~= "terminal"
+      end,
+    },
     words = { enabled = true },
     ---@class snacks.animate.Config
     ---@field easing? snacks.animate.easing|snacks.animate.easing.Fn
@@ -57,9 +84,267 @@ return {
       win = {
         style = "lazygit",
       },
-    }
+    },
+    ---@class snacks.picker.Config
+    ---@field source? string source name and config to use
+    ---@field pattern? string|fun(picker:snacks.Picker):string pattern used to filter items by the matcher
+    ---@field search? string|fun(picker:snacks.Picker):string search string used by finders
+    ---@field cwd? string current working directory
+    ---@field live? boolean when true, typing will trigger live searches
+    ---@field limit? number when set, the finder will stop after finding this number of items. useful for live searches
+    ---@field ui_select? boolean set `vim.ui.select` to a snacks picker
+    --- Source definition
+    ---@field items? snacks.picker.finder.Item[] items to show instead of using a finder
+    ---@field format? snacks.picker.format|string format function or preset
+    ---@field finder? snacks.picker.finder|string finder function or preset
+    ---@field preview? snacks.picker.preview|string preview function or preset
+    ---@field matcher? snacks.picker.matcher.Config matcher config
+    ---@field sort? snacks.picker.sort|snacks.picker.sort.Config sort function or config
+    --- UI
+    ---@field win? snacks.picker.win.Config
+    ---@field layout? snacks.picker.layout.Config|string|{}|fun(source:string):(snacks.picker.layout.Config|string)
+    ---@field icons? snacks.picker.icons
+    ---@field prompt? string prompt text / icon
+    --- Preset options
+    ---@field previewers? snacks.picker.preview.Config
+    ---@field sources? snacks.picker.sources.Config|{}
+    ---@field layouts? table<string, snacks.picker.layout.Config>
+    --- Actions
+    ---@field actions? table<string, snacks.picker.Action.spec> actions used by keymaps
+    ---@field confirm? snacks.picker.Action.spec shortcut for confirm action
+    ---@field auto_confirm? boolean automatically confirm if there is only one item
+    ---@field main? snacks.picker.main.Config main editor window config
+    ---@field on_change? fun(picker:snacks.Picker, item:snacks.picker.Item) called when the cursor changes
+    ---@field on_show? fun(picker:snacks.Picker) called when the picker is shown
+    picker = {
+      prompt = " ",
+      sources = {},
+      layout = {
+        cycle = true,
+        --- Use the default layout or vertical if the window is too narrow
+        preset = function()
+          return vim.o.columns >= 120 and "default" or "vertical"
+        end,
+      },
+      ui_select = true, -- replace `vim.ui.select` with the snacks picker
+      previewers = {
+        file = {
+          max_size = 1024 * 1024, -- 1MB
+          max_line_length = 500,
+        },
+      },
+      win = {
+        -- input window
+        input = {
+          keys = {
+            ["<Esc>"] = "close",
+            -- to close the picker on ESC instead of going to normal mode,
+            -- add the following keymap to your config
+            -- ["<Esc>"] = { "close", mode = { "n", "i" } },
+            ["<c-c>"] = { "close", mode = { "n", "i" } },
+            ["<CR>"] = {"confirm", mode = {"n", "i"}},
+            ["G"] = "list_bottom",
+            ["gg"] = "list_top",
+            ["j"] = "list_down",
+            ["k"] = "list_up",
+            ["/"] = "toggle_focus",
+            ["q"] = "close",
+            ["?"] = "toggle_help",
+            ["<a-m>"] = { "toggle_maximize", mode = { "i", "n" } },
+            ["<a-P>"] = { "toggle_preview", mode = { "i", "n" } },
+            ["<c-b>"] = { "cycle_win", mode = { "i", "n" } },
+            ["<C-w>"] = { "<c-s-w>", mode = { "i" }, expr = true, desc = "delete word" },
+            ["<C-Up>"] = { "history_back", mode = { "i", "n" } },
+            ["<C-Down>"] = { "history_forward", mode = { "i", "n" } },
+            ["<Tab>"] = { "select_and_next", mode = { "i", "n" } },
+            ["<S-Tab>"] = { "select_and_prev", mode = { "i", "n" } },
+            ["<S-Right>"] = { "select_and_next", mode = { "i", "n" } },
+            ["<S-Left>"] = { "select_and_prev", mode = { "i", "n" } },
+            ["<Down>"] = { "list_down", mode = { "i", "n" } },
+            ["<Up>"] = { "list_up", mode = { "i", "n" } },
+            ["<c-j>"] = { "list_down", mode = { "i", "n" } },
+            ["<c-k>"] = { "list_up", mode = { "i", "n" } },
+            ["<c-n>"] = { "list_down", mode = { "i", "n" } },
+            ["<c-p>"] = { "list_up", mode = { "i", "n" } },
+            ["<S-Up>"] = { "preview_scroll_up", mode = { "i", "n" } },
+            ["<c-d>"] = { "list_scroll_down", mode = { "i", "n" } },
+            ["<S-Down>"] = { "preview_scroll_down", mode = { "i", "n" } },
+            ["<a-I>"] = { "toggle_live", mode = { "i", "n" } },
+            ["<c-u>"] = { "list_scroll_up", mode = { "i", "n" } },
+            ["<ScrollWheelDown>"] = { "list_scroll_wheel_down", mode = { "i", "n" } },
+            ["<ScrollWheelUp>"] = { "list_scroll_wheel_up", mode = { "i", "n" } },
+            ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+            ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
+            -- ["<c-q>"] = {
+            --   function()
+            --     print("hi there")
+            --   end,
+            --   mode = { "i", "n" }
+            -- },
+            ["<c-q>"] = { "qflist", mode = { "i", "n" } },
+            ["<a-i>"] = { "toggle_ignored", mode = { "i", "n" } },
+            ["<a-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+          },
+          b = {
+            minipairs_disable = true,
+          },
+        },
+        -- result list window
+        list = {
+          keys = {
+            ["<CR>"] = "confirm",
+            ["<C-c>"] = "close",
+            ["gg"] = "list_top",
+            ["G"] = "list_bottom",
+            ["i"] = "focus_input",
+            ["j"] = "list_down",
+            ["k"] = "list_up",
+            ["q"] = "close",
+            ["<Tab>"] = "select_and_next",
+            ["<S-Tab>"] = "select_and_prev",
+            ["<S-Right>"] = "select_and_next",
+            ["<S-Left>"] = "select_and_prev",
+            ["<Down>"] = "list_down",
+            ["<Up>"] = "list_up",
+            ["<c-d>"] = "list_scroll_down",
+            ["<c-u>"] = "list_scroll_up",
+            ["zt"] = "list_scroll_top",
+            ["zb"] = "list_scroll_bottom",
+            ["zz"] = "list_scroll_center",
+            ["/"] = "toggle_focus",
+            ["<ScrollWheelDown>"] = "list_scroll_wheel_down",
+            ["<ScrollWheelUp>"] = "list_scroll_wheel_up",
+            ["<S-Down>"] = "preview_scroll_down",
+            ["<S-Up>"] = "preview_scroll_up",
+            ["<c-v>"] = "edit_vsplit",
+            ["<c-s>"] = "edit_split",
+            ["<c-j>"] = "list_down",
+            ["<c-k>"] = "list_up",
+            ["<c-n>"] = "list_down",
+            ["<c-p>"] = "list_up",
+            ["<c-b>"] = "cycle_win",
+            ["<Esc>"] = "close",
+          },
+        },
+        -- preview window
+        preview = {
+          minimal = false,
+          wo = {
+            cursorline = false,
+            colorcolumn = "",
+          },
+          keys = {
+            ["<Esc>"] = "close",
+            ["<c-c>"] = "close",
+            ["q"] = "close",
+            ["i"] = "focus_input",
+            ["<ScrollWheelDown>"] = "list_scroll_wheel_down",
+            ["<ScrollWheelUp>"] = "list_scroll_wheel_up",
+            ["<c-b>"] = "cycle_win",
+            ["<a-m>"] = "toggle_maximize",
+          },
+        },
+      },
+      ---@class snacks.picker.icons
+      icons = {
+        indent = {
+          vertical    = "│ ",
+          middle = "├╴",
+          last   = "└╴",
+        },
+        ui = {
+          live        = "󰐰 ",
+          selected    = "● ",
+          -- selected = " ",
+        },
+        git = {
+          commit = "󰜘 ",
+        },
+        diagnostics = {
+          Error = " ",
+          Warn  = " ",
+          Hint  = " ",
+          Info  = " ",
+        },
+        kinds = {
+          Array         = " ",
+          Boolean       = "󰨙 ",
+          Class         = " ",
+          Color         = " ",
+          Control       = " ",
+          Collapsed     = " ",
+          Constant      = "󰏿 ",
+          Constructor   = " ",
+          Copilot       = " ",
+          Enum          = " ",
+          EnumMember    = " ",
+          Event         = " ",
+          Field         = " ",
+          File          = " ",
+          Folder        = " ",
+          Function      = "󰊕 ",
+          Interface     = " ",
+          Key           = " ",
+          Keyword       = " ",
+          Method        = "󰊕 ",
+          Module        = " ",
+          Namespace     = "󰦮 ",
+          Null          = " ",
+          Number        = "󰎠 ",
+          Object        = " ",
+          Operator      = " ",
+          Package       = " ",
+          Property      = " ",
+          Reference     = " ",
+          Snippet       = "󱄽 ",
+          String        = " ",
+          Struct        = "󰆼 ",
+          Text          = " ",
+          TypeParameter = " ",
+          Unit          = " ",
+          Uknown        = " ",
+          Value         = " ",
+          Variable      = "󰀫 ",
+        },
+      },
+    },
   },
   keys = {
+    -- START picker keys
+    { "<leader>b", function() Snacks.picker.buffers({
+      ---@class snacks.picker.buffers.Config: snacks.picker.Config
+      ---@field hidden? boolean show hidden buffers (unlisted)
+      ---@field unloaded? boolean show loaded buffers
+      ---@field current? boolean show current buffer
+      ---@field nofile? boolean show `buftype=nofile` buffers
+      ---@field sort_lastused? boolean sort by last used
+      ---@field filter? snacks.picker.filter.Config
+      finder = "buffers",
+      format = "buffer",
+      hidden = false,
+      unloaded = true,
+      current = false,
+      sort_lastused = true,
+    }) end, desc = "Buffers" },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader>gc", function() Snacks.picker.git_log() end, desc = "Git Log" },
+    { "<leader>/", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+    { "<leader>fw", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Visual selection", mode = { "x" } },
+    { "<leader>fW", function() Snacks.picker.grep_word() end, desc = "Word under cursor", mode = { "n" } },
+    { "<leader>fj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+    { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
+    { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume" },
+    { "<leader>fq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+    { "<leader>fh", function() Snacks.picker.help() end, desc = "Quickfix List" },
+    { "<leader>fM", function() Snacks.picker.man() end, desc = "Quickfix List" },
+    { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+    { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+    { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+    { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+    -- END picker keys
+     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
     { "<leader>Bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>GG", function() Snacks.lazygit() end, desc = "Lazygit" },
@@ -89,7 +374,7 @@ return {
           },
         })
       end,
-    }
+    },
   },
   init = function()
     vim.api.nvim_create_autocmd("User", {

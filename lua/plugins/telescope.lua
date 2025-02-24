@@ -141,7 +141,7 @@ return {
       --   require('telescope.builtin').grep_string({ search = word })
       -- end, {desc = '[F]ind [W]ord under cursor'})
       vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[F]ind [O]ld files' })
-      vim.keymap.set('n', '<leader>b', ":lua require('telescope.builtin').buffers({sort_mru=true,ignore_current_buffer=true})<CR>", { desc = 'Find existing [B]uffers (sorted)' })
+      -- vim.keymap.set('n', '<leader>b', ":lua require('telescope.builtin').buffers({sort_mru=true,ignore_current_buffer=true})<CR>", { desc = 'Find existing [B]uffers (sorted)' })
       vim.keymap.set('n', '<leader>gt', require('telescope.builtin').git_status, { desc = 'Search [G]it s[T]atus' })
       -- vim.keymap.set('n', '<leader>fr', require('telescope.builtin').resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>fR', require('telescope.actions.history').get_simple_history, { desc = '[F]ind [R]ecent History' })

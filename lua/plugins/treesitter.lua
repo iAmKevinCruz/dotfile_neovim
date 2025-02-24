@@ -32,6 +32,27 @@ return {
         highlight = {
           -- `false` will disable the whole extension
           enable = true,
+          -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+          disable = function(lang, buf)
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+              return true
+            end
+
+          -- prevent loading Treesitter for minified VBT files
+            local buf_info = vim.fn.getbufinfo(buf)
+            local buf_name = buf_info[1].name
+            local exclude_pattern = {
+              "assets/global.vbt.js",
+              "assets/global.vbt.css"
+            }
+            for _,name in ipairs(exclude_pattern) do
+              if string.match(buf_name, name) then
+                return true
+              end
+            end
+          end,
 
           -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
           -- Set this to `true` if you depend on "syntax" being enabled (like for indentation).

@@ -70,19 +70,20 @@ if vim.g.neovide then
     return string.format("%x", math.floor((255 * vim.g.transparency) or 0.8))
   end
 
-  vim.o.guifont = "Fira Code:h12" -- text below applies for VimScript
-  vim.g.neovide_transparency = 0.6
-  vim.g.transparency = 0.6
-  vim.g.neovide_window_blurred = true
-  vim.g.neovide_background_color = "#1e1e2e" .. alpha()
-  vim.g.neovide_hide_mouse_when_typing = false
-  vim.g.neovide_input_macos_alt_is_meta = true
-  vim.g.neovide_floating_blur_amount_x = 3.0
-  vim.g.neovide_floating_blur_amount_y = 3.0
+  vim.o.guifont = "FiraCode Nerd Font:h12" -- text below applies for VimScript
+  -- vim.g.neovide_transparency = 0.6
+  -- vim.g.transparency = 0.6
+  vim.g.neovide_window_blurred = false
+  -- vim.g.neovide_background_color = "#1e1e2e" .. alpha()
+  -- vim.g.neovide_hide_mouse_when_typing = true
+  -- vim.g.neovide_input_macos_option_is_meta = "right"
+  -- vim.g.neovide_floating_blur_amount_x = 3.0
+  -- vim.g.neovide_floating_blur_amount_y = 3.0
   vim.keymap.set('n', '<D-v>', '"+P') -- Paste normal mode
   vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mode
   vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
+  vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Yank to system clipboard', silent = true })
 end
 
 -- START LSP Settings

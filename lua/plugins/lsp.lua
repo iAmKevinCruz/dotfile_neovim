@@ -32,11 +32,11 @@ return {
         ensure_installed = {
           "lua_ls",
           -- "rust_analyzer",
-          "tsserver",
+          "ts_ls",
           "emmet_ls",
           "tailwindcss",
-          "prettierd",
-          "prettier",
+          -- "prettierd",
+          -- "prettier",
           "shopify_theme_ls",
         },
         handlers = {
@@ -125,11 +125,24 @@ return {
         callback = function(args)
           vim.keymap.set('n', '<leader>ra', vim.lsp.buf.rename, { buffer = args.buf })
           vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { buffer = args.buf })
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = args.buf })
+          -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = args.buf })
           -- this is a key map to taggle virtual_text. Needs to read if it is currently true or false
           -- vim.keymap.set('n', 'ltd', function ()
           --
           -- end, { buffer = args.buf })
+
+          -- prevent loading LSP for minified VBT files
+          local buf_info = vim.fn.getbufinfo(args.buf)
+          local buf_name = buf_info[1].name
+          local exclude_pattern = {
+            "assets/global.vbt.js",
+            "assets/global.vbt.css"
+          }
+          for _,name in ipairs(exclude_pattern) do
+            if string.match(buf_name, name) then
+              vim.cmd "LspStop"
+            end
+          end
         end,
       })
     end
