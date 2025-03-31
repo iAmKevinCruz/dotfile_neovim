@@ -70,9 +70,9 @@ return {
         },
       })
 
-      vim.api.nvim_set_hl(0, "MiniDiffSignDelete", { fg = "#f38ba8" })
-      vim.api.nvim_set_hl(0, "MiniDiffSignChange", { fg = "#f9e2af" })
-      vim.api.nvim_set_hl(0, "MiniDiffSignAdd", { fg = "#a6e3a1" })
+      -- vim.api.nvim_set_hl(0, "MiniDiffSignDelete", { fg = "#f38ba8" })
+      -- vim.api.nvim_set_hl(0, "MiniDiffSignChange", { fg = "#f9e2af" })
+      -- vim.api.nvim_set_hl(0, "MiniDiffSignAdd", { fg = "#a6e3a1" })
 
       -- require('mini.notify').setup()
       -- require('mini.statusline').setup()

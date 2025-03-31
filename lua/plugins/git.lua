@@ -15,8 +15,9 @@ vim.keymap.set('n', '<leader>gfc', ':LazyGitFilterCurrentFile <CR>', { desc = 'O
 
 return {
   'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
+  -- 'tpope/vim-rhubarb',
 
+  -- I use gitsigns just for the current line blame
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',

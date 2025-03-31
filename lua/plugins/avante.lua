@@ -6,18 +6,25 @@ return {
   opts = {
     debug = false,
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | [string]
-    provider = "claude", -- Only recommend using Claude
+    provider = "gemini", -- Only recommend using Claude
     auto_suggestions_provider = "claude",
     ---@type AvanteSupportedProvider
     claude = {
       endpoint = "https://api.anthropic.com",
-      model = "claude-3-5-sonnet-20241022",
+      model = "claude-3-7-sonnet-20250219",
       temperature = 0,
       max_tokens = 4096,
+    },
+    gemini = {
+      model = "gemini-2.5-pro-exp-03-25",
+      temperature = 0,
+      max_tokens = 4096,
+      api_key_name = "GEMINI_API_KEY",
     },
     web_search_engine = {
       provider = "tavily", -- tavily, serpapi, searchapi or google
     },
+    cursor_applying_provider = 'groq',
     ---To add support for custom provider, follow the format below
     ---See https://github.com/yetone/avante.nvim/wiki#custom-providers for more details
     ---@type {[string]: AvanteProvider}
@@ -38,6 +45,13 @@ return {
         temperature = 0,
         max_tokens = 8000,
       },
+      groq = { -- define groq provider
+        __inherited_from = 'openai',
+        api_key_name = 'GROQ_API_KEY',
+        endpoint = 'https://api.groq.com/openai/v1/',
+        model = 'llama-3.3-70b-versatile',
+        max_tokens = 32768, -- remember to increase this value, otherwise it will stop generating halfway
+      },
     },
     ---Specify the behaviour of avante.nvim
     ---1. auto_apply_diff_after_generation: Whether to automatically apply diff after LLM response.
@@ -53,6 +67,7 @@ return {
       auto_apply_diff_after_generation = false,
       support_paste_from_clipboard = false,
       minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+      enable_cursor_planning_mode = true,
     },
     history = {
       max_tokens = 4096,

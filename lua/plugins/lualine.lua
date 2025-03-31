@@ -70,8 +70,8 @@ return {
 
       require('lualine').setup {
         options = {
-          theme = "catppuccin",
-          theme = rose_pine_theme,
+          -- theme = "catppuccin",
+          -- theme = rose_pine_theme,
           -- theme = oldworld_theme,
           -- component_separators = '|',
           -- section_separators = '',

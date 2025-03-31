@@ -1,5 +1,6 @@
 
 return {
+  --[[
   {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
@@ -67,4 +68,5 @@ return {
         toggle_telescope(harpoon:list()) end, { desc = "Open harpoon telescope" })
     end
   }
+  ]]
 }

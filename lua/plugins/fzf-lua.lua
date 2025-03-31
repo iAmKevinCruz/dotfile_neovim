@@ -1,3 +1,4 @@
+--[[
 -- vim.keymap.set('n', '<leader>ff', "<cmd>FzfLua files<cr>", { desc = '[F]ind [F]iles' })
 -- vim.keymap.set('n', '<leader>fW', "<cmd>FzfLua grep_cword<cr>", { desc = '[F]ind [W]ord under cusoror' })
 -- vim.keymap.set('n', '<leader>fw', "<cmd>FzfLua live_grep<cr>", { desc = '[F]ind [W]ord' })
@@ -12,6 +13,7 @@ vim.keymap.set('n', '<leader>fQ', "<cmd>FzfLua quickfix_stack<cr>", { desc = '[F
 vim.keymap.set('n', '<leader>fc', "<cmd>FzfLua changes<cr>", { desc = '[F]ind [C]hanges' })
 -- vim.keymap.set('n', '<leader>fk', "<cmd>FzfLua keymaps<cr>", { desc = '[F]ind [K]eymaps' })
 -- vim.keymap.set('n', '<leader>/', "<cmd>FzfLua blines<cr>", { desc = '[/] Current Buffer Fuzzy Search' })
+]]
 
 return {
   {

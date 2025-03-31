@@ -22,15 +22,10 @@ return {
         -- vim.api.nvim_set_hl(0, "RainbowLightGreen", { fg = "#DFFFD8" })
         -- changed to lighter color and bg to mimic vscode catpuccin indent lines. 
 
-        -- vim.api.nvim_set_hl(0, "RainbowDark", { bg = "#2E2E31" })
-        -- vim.api.nvim_set_hl(0, "RainbowBrown", { bg = "#272E34" })
-        -- vim.api.nvim_set_hl(0, "RainbowPeach", { bg = "#2D253C" })
-        -- vim.api.nvim_set_hl(0, "RainbowLightGreen", { bg = "#252C3B" })
-
-        vim.api.nvim_set_hl(0, "RainbowDark", { fg = "#2E2E31" })
-        vim.api.nvim_set_hl(0, "RainbowBrown", { fg = "#272E34" })
-        vim.api.nvim_set_hl(0, "RainbowPeach", { fg = "#2D253C" })
-        vim.api.nvim_set_hl(0, "RainbowLightGreen", { fg = "#252C3B" })
+        -- vim.api.nvim_set_hl(0, "RainbowDark", { fg = "#2E2E31" })
+        -- vim.api.nvim_set_hl(0, "RainbowBrown", { fg = "#272E34" })
+        -- vim.api.nvim_set_hl(0, "RainbowPeach", { fg = "#2D253C" })
+        -- vim.api.nvim_set_hl(0, "RainbowLightGreen", { fg = "#252C3B" })
       end)
       require('ibl').setup {
         scope = {

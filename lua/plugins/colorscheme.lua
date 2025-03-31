@@ -43,12 +43,31 @@ return {
         telescope = {
           enabled = true,
           -- style = "nvchad"
-        }
+        },
+        custom_highlights = function(colors)
+          return {
+            MiniDiffSignDelete = { fg = colors.red },
+            MiniDiffSignChange = { fg = colors.yellow },
+            MiniDiffSignAdd = { fg = colors.green },
+            RainbowDark = {
+              fg = "#2E2E31"
+            },
+            RainbowBrown = {
+              fg = "#272E34"
+            },
+            RainbowPeach = {
+              fg = "#2D253C"
+            },
+            RainbowLightGreen = {
+              fg = "#252C3B"
+            },
+          }
+        end,
       }
     },
     config = function (_,opts)
       require("catppuccin").setup(opts)
-      vim.cmd.colorscheme "catppuccin-mocha"
+      -- vim.cmd.colorscheme "catppuccin-mocha"
     end
   },
 
@@ -100,10 +119,18 @@ return {
         DiffText = {
           bg = "#3E4B6B"
         },
-        -- DiagnosticUnderlineWarn = {
-        --   fg = "",
-        --   gui = "underline"
-        -- }
+        RainbowDark = {
+          fg = "#2E2E31"
+        },
+        RainbowBrown = {
+          fg = "#272E34"
+        },
+        RainbowPeach = {
+          fg = "#2D253C"
+        },
+        RainbowLightGreen = {
+          fg = "#252C3B"
+        },
       }
     },
     config = function (_,opts)
@@ -202,11 +229,73 @@ return {
       -- vim.cmd("colorscheme rose-pine-main")
       -- vim.cmd("colorscheme rose-pine-moon")
       -- vim.cmd("colorscheme rose-pine-dawn")
-
       -- vim.cmd("colorscheme rose-pine")
-      -- vim.api.nvim_set_hl(0, "MiniDiffSignDelete", { fg = "#f38ba8" })
-      -- vim.api.nvim_set_hl(0, "MiniDiffSignChange", { fg = "#f9e2af" })
-      -- vim.api.nvim_set_hl(0, "MiniDiffSignAdd", { fg = "#a6e3a1" })
     end
   },
+
+  {
+    "shaunsingh/nord.nvim",
+    name = "nord",
+    config = function()
+      -- require("nord").setup()
+    end
+  },
+
+  {
+    'rmehri01/onenord.nvim',
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      local colors = require("onenord.colors").load()
+
+      require('onenord').setup({
+        theme = 'dark',
+        disable = {
+          background = false
+        },
+        custom_highlights = {
+          dark = { -- only applies to the dark theme
+            ["Normal"] = { bg = "#1E1F2E" }, -- the bg for the focused buffer
+            -- ["NormalNC"] = { bg = "#000000" }, -- the bg for the unfocused buffer
+            ["MiniDiffSignDelete"] = { fg = colors.red },
+            ["MiniDiffSignChange"] = { fg = colors.yellow },
+            ["MiniDiffSignAdd"] = { fg = colors.green },
+            ["RainbowDark"] = { fg = "#2E2E31" },
+            ["RainbowBrown"] = { fg = "#272E34" },
+            ["RainbowPeach"] = { fg = "#2D253C" },
+            ["RainbowLightGreen"] = { fg = "#252C3B" },
+          },
+          light = { -- only applies to the light theme
+            ["MiniDiffSignDelete"] = { fg = colors.red },
+            ["MiniDiffSignChange"] = { fg = colors.yellow },
+            ["MiniDiffSignAdd"] = { fg = colors.green },
+            ["RainbowDark"] = { fg = colors.gray },
+            ["RainbowBrown"] = { fg = colors.light_red },
+            ["RainbowPeach"] = { fg = colors.orange },
+            ["RainbowLightGreen"] = { fg = colors.light_green },
+          },
+        },
+      })
+      vim.cmd('colorscheme onenord')
+    end,
+  },
+
+  {
+    'projekt0n/github-nvim-theme',
+    name = 'github-theme',
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require('github-theme').setup({
+        options = {
+          dim_inactive = true,
+          styles = {
+            types = "bold"
+          },
+        }
+      })
+
+      -- vim.cmd('colorscheme github_dark_dimmed')
+    end,
+  }
 }
