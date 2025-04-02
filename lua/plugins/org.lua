@@ -136,6 +136,9 @@ return {
             target = "Timestamps/Meetings/%<%Y-%m-%d> %[title].org",
           },
         },
+        bindings = {
+          goto_next_node = "",
+        },
       })
     end
   },
