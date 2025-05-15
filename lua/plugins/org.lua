@@ -54,12 +54,13 @@ return {
             headline = 'Inbox',
           },
         },
-        org_todo_keywords = {'TODO(t)', 'PROGRESS(p)', '|', 'DONE(d)', 'CANCELLED(c)', 'WAITING(w)', 'MEETING(m)'},
+        org_todo_keywords = {'TODO(t)', 'PROGRESS(p)', 'AWAP(a)', '|', 'DONE(d)', 'CANCELLED(c)', 'HOLD(h)', 'MEETING(m)'},
         org_todo_keyword_faces = {
-          TODO = ':foreground #DF8C97 :weight bold', -- overrides builtin color for `TODO` keyword
-          PROGRESS = ':foreground #C0A1F0 :weight bold',
-          DONE = ':foreground #B1D99C :weight bold :slant italic',
-          WAITING = ':foreground #EAAC86 :weight bold :slant italic',
+          TODO = ':foreground #BF616A :weight bold', -- overrides builtin color for `TODO` keyword
+          PROGRESS = ':foreground #B48EAD :weight bold',
+          AWAP = ':foreground #81A1C1 :weight bold',
+          DONE = ':foreground #A3BE8C :weight bold :slant italic',
+          HOLD = ':foreground #D08770 :weight bold :slant italic',
           CANCELLED = ':foreground #C7CFF2 :weight bold :slant italic',
           MEETING = ':foreground #89dceb :weight bold',
         },
@@ -76,15 +77,15 @@ return {
       })
     end,
   },
-  --
+
   {
     "chipsenkbeil/org-roam.nvim",
-    tag = "0.1.1",
+    -- tag = "0.1.1",
     dependencies = {
       {
         "nvim-orgmode/orgmode",
         -- tag = "0.3.7",
-        tag = "0.5.3",
+        -- tag = "0.5.3",
       },
     },
     config = function()

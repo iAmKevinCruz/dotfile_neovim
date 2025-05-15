@@ -17,7 +17,7 @@ return {
   opts = {
     bigfile = { enabled = true },
     notifier = {
-      enabled = true,
+      enabled = false,
       timeout = 3000,
     },
     quickfile = { enabled = true },
@@ -328,7 +328,24 @@ return {
     }) end, desc = "Buffers" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>gc", function() Snacks.picker.git_log() end, desc = "Git Log" },
-    { "<leader>/", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+    -- { "<leader>/", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+    { "<leader>/", function() Snacks.picker.lines({
+      finder = "lines",
+      format = "lines",
+      layout = {
+        preview = "main",
+        preset = "ivy",
+      },
+      jump = { match = true },
+      main = { current = true },
+      on_show = function(picker)
+        local cursor = vim.api.nvim_win_get_cursor(picker.main)
+        local info = vim.api.nvim_win_call(picker.main, vim.fn.winsaveview)
+        picker.list:view(cursor[1], info.topline)
+        picker:show_preview()
+      end,
+      sort = { fields = { "score:desc", "idx" } }
+    }) end, desc = "Buffer Lines" },
     { "<leader>fw", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Visual selection", mode = { "x" } },
     { "<leader>fW", function() Snacks.picker.grep_word() end, desc = "Word under cursor", mode = { "n" } },
@@ -340,6 +357,7 @@ return {
     { "<leader>fh", function() Snacks.picker.help() end, desc = "Quickfix List" },
     { "<leader>fM", function() Snacks.picker.man() end, desc = "Quickfix List" },
     { "<leader>fd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+    { "<leader>fn", function() Snacks.picker.notifications() end, desc = "View notifications" },
     { "<leader>fo", function() Snacks.picker.lsp_symbols() end, desc = "Find LSP Symbols" },
     { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },

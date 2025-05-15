@@ -50,8 +50,8 @@ vim.keymap.set('n', '<Leader>to', '<CMD>tabnew %<CR>', { desc = 'Create new tab'
 vim.keymap.set('n', '<Leader>tx', '<CMD>tabclose<CR>', { desc = 'Close tab', silent = true })
 vim.keymap.set('n', '<A-.>', '<CMD>tabn<CR>', { desc = 'Next tab', silent = true })
 vim.keymap.set('n', '<A-,>', '<CMD>tabp<CR>', { desc = 'Prev tab', silent = true })
-vim.keymap.set('n', '<A->>', ':+tabmove<CR>', { desc = 'Move tab to the right', silent = true })
-vim.keymap.set('n', '<A-<>', ':-tabmove<CR>', { desc = 'Move tab to the left', silent = true })
+vim.keymap.set('n', '<leader><A-.>', ':+tabmove<CR>', { desc = 'Move tab to the right', silent = true })
+vim.keymap.set('n', '<leader><A-,>', ':-tabmove<CR>', { desc = 'Move tab to the left', silent = true })
 vim.keymap.set('n', 'x', '"_x', { desc = 'Delete without yanking', silent = true })
 vim.keymap.set('n', '<leader>d', '"_d', { desc = 'Delete without yanking', silent = true })
 vim.keymap.set('n', '<leader>p', '"_dP', { desc = 'Delete without yanking', silent = true })
@@ -94,6 +94,12 @@ vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Window down', silent = true })
 -- this one is only here to make the c-j work. Idk why this is. Apparently, c-m and c-j are the same in some kind of terminal ascii way
 vim.keymap.set('n', '<C-m>', '<C-w>j', { desc = 'Window down', silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Window up', silent = true })
+
+-- window sizing
+vim.keymap.set('n', '<C-]>', '<C-w>5>', { desc = 'Window wider', silent = true })
+vim.keymap.set('n', '<C-[>', '<C-w>5<', { desc = 'Window narrower', silent = true })
+vim.keymap.set('n', '<A-]>', '<C-w>5+',{ desc = 'Window taller', silent = true })
+vim.keymap.set('n', '<A-[>', '<C-w>5-',{ desc = 'Window shorter', silent = true })
 
 -- save
 vim.keymap.set('n', '<C-s>', '<cmd>silent! update | redraw<CR>', { desc = 'Save', silent = true })

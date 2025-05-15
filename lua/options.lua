@@ -89,7 +89,6 @@ if vim.g.neovide then
   vim.keymap.set({ 'n', 'v' }, '<C-+>', '<cmd>lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>', { desc = "Increase Font Size (Neovide only)" })
   vim.keymap.set({ 'n', 'v' }, '<C-->', '<cmd>lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>', { desc = "Decrease Font Size (Neovide only)" })
   vim.keymap.set({ 'n', 'v' }, '<C-0>', '<cmd>lua vim.g.neovide_scale_factor = 1<CR>', { desc = "Reset Font Size (Neovide only)" })
-  
 end
 
 -- START LSP Settings

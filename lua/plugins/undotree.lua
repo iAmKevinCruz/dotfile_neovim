@@ -1,5 +1,6 @@
 -- Keymaps
-vim.keymap.set('n', '<leader>ut', '<CMD>UndotreeToggle<CR>', { desc = 'Open [U]ndo [T]ree' })
+vim.keymap.set('n', '<leader>utt', '<CMD>UndotreeToggle<CR>', { desc = 'Open [U]ndo [T]ree [T]oggle' })
+vim.keymap.set('n', '<leader>utf', '<CMD>UndotreeFocus<CR>', { desc = 'Open [U]ndo [T]ree [F]ocus' })
 
 return {
   {

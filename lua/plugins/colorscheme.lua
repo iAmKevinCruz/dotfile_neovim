@@ -256,7 +256,9 @@ return {
         custom_highlights = {
           dark = { -- only applies to the dark theme
             ["Normal"] = { bg = "#1E1F2E" }, -- the bg for the focused buffer
+            ["NormalNC"] = { bg = "#1E1F2E" }, -- the bg for the focused buffer
             -- ["NormalNC"] = { bg = "#000000" }, -- the bg for the unfocused buffer
+            ["MiniFilesNormal"] = { bg = "#1E1F2E" }, -- the bg for the focused buffer
             ["MiniDiffSignDelete"] = { fg = colors.red },
             ["MiniDiffSignChange"] = { fg = colors.yellow },
             ["MiniDiffSignAdd"] = { fg = colors.green },
@@ -264,15 +266,21 @@ return {
             ["RainbowBrown"] = { fg = "#272E34" },
             ["RainbowPeach"] = { fg = "#2D253C" },
             ["RainbowLightGreen"] = { fg = "#252C3B" },
+            ["RainbowDelimiterRed"] = { fg = "#d57780" },
           },
           light = { -- only applies to the light theme
             ["MiniDiffSignDelete"] = { fg = colors.red },
             ["MiniDiffSignChange"] = { fg = colors.yellow },
             ["MiniDiffSignAdd"] = { fg = colors.green },
-            ["RainbowDark"] = { fg = colors.gray },
-            ["RainbowBrown"] = { fg = colors.light_red },
-            ["RainbowPeach"] = { fg = colors.orange },
-            ["RainbowLightGreen"] = { fg = colors.light_green },
+            -- ["RainbowDark"] = { fg = colors.gray },
+            -- ["RainbowBrown"] = { fg = colors.light_red },
+            -- ["RainbowPeach"] = { fg = colors.orange },
+            -- ["RainbowLightGreen"] = { fg = colors.light_green },
+            -- Light mode colors (subtle/faded)
+            ["RainbowDark"] = { fg = "#B8B8BB" },       -- Light gray with slight blue undertone
+            ["RainbowBrown"] = { fg = "#BDC4C9" },      -- Very light grayish blue
+            ["RainbowPeach"] = { fg = "#C9BDD2" },      -- Light lilac/lavender
+            ["RainbowLightGreen"] = { fg = "#BFC5D0" }, -- Light grayish blue with slight purple
           },
         },
       })

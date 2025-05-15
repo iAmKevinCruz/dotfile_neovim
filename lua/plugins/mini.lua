@@ -164,6 +164,12 @@ return {
             neigh_pattern = '[^\\%a][.%A]',
             register = { cr = false }
           },
+          ['~'] = {
+            action = 'closeopen',
+            pair = '~~',
+            neigh_pattern = '[^%~\\%a][.%A]',
+            register = { cr = false }
+          },
           ['%'] = {
             action = 'closeopen',
             pair = '%%',
