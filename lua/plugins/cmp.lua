@@ -78,6 +78,12 @@ return {
       end
 
       cmp.setup ({
+        enabled = function ()
+          local disabled = false
+          disabled = disabled or (vim.bo.filetype == "org-roam-select")
+          disabled = disabled or (vim.bo.filetype == "snacks_picker_input")
+          return not disabled
+        end,
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)

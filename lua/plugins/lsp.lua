@@ -35,6 +35,7 @@ return {
           "ts_ls",
           "emmet_ls",
           "tailwindcss",
+          "gopls",
           -- "prettierd",
           -- "prettier",
           "shopify_theme_ls",

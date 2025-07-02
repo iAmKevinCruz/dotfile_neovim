@@ -9,3 +9,4 @@ vim.keymap.set(
   { silent = true, buffer = bufnr }
 )
 
+vim.keymap.set("n", "<leader>ll", "<cmd>RustFmt<CR>", { silent = true, buffer = bufnr, desc = "RustFmt for formatting Rust" })
