@@ -85,7 +85,8 @@ vim.keymap.set('n', '=[', '=a[', { desc = 'Format space AROUND brackets', silent
 vim.keymap.set('n', '=]', '=i]', { desc = 'Format space INSIDE brackets', silent = true })
 vim.keymap.set('n', '<leader>Q', ':bd<CR>', { desc = 'Buffer delete', silent = true })
 vim.keymap.set('n', '<Esc>', ':noh <CR>', { desc = 'Clear highlights', silent = true })
-vim.keymap.set('n', '<leader>ll', '<cmd>ALEFix prettier<cr>', { desc = 'ALEFix prettier', silent = true })
+-- vim.keymap.set('n', '<leader>ll', '<cmd>ALEFix prettier<cr>', { desc = 'ALEFix prettier', silent = true })
+vim.keymap.set('n', '<leader>ll', '<cmd>lua vim.lsp.buf.format()<cr>', { desc = 'Vim LSP Format Buffer', silent = true })
 
 -- switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Window left', silent = true })

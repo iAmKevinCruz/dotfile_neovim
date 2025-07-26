@@ -13,7 +13,7 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,      -- Recommended
-    ft = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante" },
+    ft = { "markdown", "norg", "rmd", "vimwiki", "Avante" },
     dependencies = {
       -- You will not need this if you installed the
       -- parsers manually
@@ -27,6 +27,22 @@ return {
         ignore_buftypes = {},
       },
       max_length = 99999,
+      list_items = {
+        indent_size = function (buffer)
+          if type(buffer) ~= "number" then
+            return vim.bo.shiftwidth or 4;
+          end
+
+          --- Use 'shiftwidth' value.
+          return vim.bo[buffer].shiftwidth or 4;
+        end,
+        shift_width = 2,
+
+        marker_minus = {
+          enable = true,
+          add_padding = true
+        },
+      },
       -- block_quotes = {
       --   enable = true,
       --
